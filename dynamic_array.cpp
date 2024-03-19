@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-//Test gita
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
@@ -23,7 +22,43 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 
         void push_back(T value)  //funckja ma za zadanie wlozyc na ostatnie miejsce listy, element o wartosci przez nas zdefinowanej i pozniej zwieksza jej rozmiar 
         {
-            if(size == capacity)    //jezeli rozmiar jest rowny pojemnosci czyli osiagnelismy maks naszej listy
+            grow_array();
+            array[size] = value; // przypisujemy na mijescu size nasza wartosc ktora uzywamy
+            size++; // zwiekszamy rozmiar talbicy tym razem w samej zmiennej
+        }
+        
+        void pop_back() //funckja majaca na celu ,,wyrzucenie ostatniego elemtnetu z tablicy"
+        {
+            array[size-1] = T(); //przyrownujemy wartosc ostatniego elementu talbicy do wartosc 0.
+            //T() to yrazenie ktore tworzy nowy obiekt typu T przy uzyciu konstruktora domyslnego a wartosc domylsna to jest 0
+            shrink_array();
+            size--; // pomnijeszenie rozmiary talbicy o jeden
+        }
+
+        void push_front(T value)
+        {
+            grow_array();
+            for (int i = size;i >= 0; i--)
+            {
+                array[i+1] = array[i]; 
+            }
+            array[0] = value;
+            size++;
+        }
+
+        void pop_front()
+        {
+            shrink_array();
+            for (int i = 0;i <= size; i++)
+            {
+                array[i] = array[i+1];
+            }
+            size--;
+        }
+
+        void grow_array()
+        {
+            if (size == capacity)
             {
                 T* newlist = new T[capacity*2];  //tworzymy nowa liste o dwa razy wieskzym rozmiarze 
                 capacity = capacity*2; //tutaj zwiekszamy pojemnosc listy dwukrotnie ale tym razem samej zmiennej
@@ -33,17 +68,14 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
                 }
                 delete[] array; // usuwamy stara liste z pamieci
                 array = newlist; // przypisujemy nowa liste do starej nazwwy tej zmiennej
+            } else {
+                return;
             }
-            array[size] = value; // przypisujemy na mijescu size nasza wartosc ktora uzywamy
-            size++; // zwiekszamy rozmiar talbicy tym razem w samej zmiennej
-            
         }
-        
-        void pop_back() //funckja majaca na celu ,,wyrzucenie ostatniego elemtnetu z tablicy"
+
+        void shrink_array()
         {
-            array[size-1] = T(); //przyrownujemy wartosc ostatniego elementu talbicy do wartosc 0.
-            //T() to yrazenie ktore tworzy nowy obiekt typu T przy uzyciu konstruktora domyslnego a wartosc domylsna to jest 0
-            if(size == capacity/2 ) //jezeli rozmiar tablicy jest rowny polowie pojemnosci naszej tablicy czyli ilosc elemetow spadnie ponizej polowy mozliwsoci tablicy
+            if (size == capacity/2)
             {
                 capacity = capacity/2; 
                 T* newlist = new T[capacity]; // tworzymy nowa liste ktora bedzie miala o polowe pomnijeszony rozmiar niz wczesniej 
@@ -53,8 +85,9 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
                 }
                 delete[] array; // usuniecie starej tablicy
                 array = newlist; // przypisanie do zmiennej array nowej tablicy 
+            } else {
+                return;
             }
-            size -= 1; // pomnijeszenie rozmiary talbicy o jeden
         }
 
         void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
@@ -163,12 +196,16 @@ template <typename T> class TwoWayList
 
 int main()
 {
-    TwoWayList <int> clasa; 
+    DynamicArray <int> clasa; 
     for (int i = 0; i <= 10; i++)
     {
+        //clasa.push_back(i);
+        //clasa.pop_back();
         clasa.push_front(i);
+        //clasa.pop_front();
     }
-    clasa.print_double_list();
+
+    clasa.print_array();
     std::cout << "hello" << std::endl;
     return 0;
 }
