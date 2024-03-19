@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+//Test gita
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
