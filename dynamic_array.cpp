@@ -32,30 +32,30 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             size--; // pomnijeszenie rozmiary talbicy o jeden
         }
 
-        void push_front(T value)
+        void push_front(T value) // funckja majaca na celu ,,wsadzenie" nowego elementu o wartosci value na poczatek tablicy
         {
             grow_array();
-            for (int i = size;i >= 0; i--)
+            for (int i = size;i >= 0; i--)// iteruje przez wysztkie elemetny w arrayu
             {
-                array[i+1] = array[i]; 
+                array[i+1] = array[i]; // wartosci komurek zostana przesuniete o jeden w prawo w tablicy  
             }
-            array[0] = value;
-            size++;
+            array[0] = value; // przypisanie nowej wartosci do pierwszego elementu w tablicy
+            size++; // zwiekszenie rozmairu tablicy
         }
 
-        void pop_front()
+        void pop_front() // funckja majaca na celu wyrzucenie pierwszego elementu
         {
             shrink_array();
-            for (int i = 0;i <= size; i++)
+            for (int i = 0;i <= size; i++) // iterowanie przez wsyzstkie elementy w liscie
             {
-                array[i] = array[i+1];
+                array[i] = array[i+1]; // wartosci komurek sa nadpisywane przez wartosci o jeden w lewo
             }
-            size--;
+            size--; // zmniejszenie rozmiaru tablicy
         }
 
-        void grow_array()
+        void grow_array() // funckja sprawdzajaca czy mozna ziwekszysc rozmiar tablicy jezeli tak robi to
         {
-            if (size == capacity)
+            if (size == capacity) // jezeli rozmiar tablicy jest rowny jej pojemnosci 
             {
                 T* newlist = new T[capacity*2];  //tworzymy nowa liste o dwa razy wieskzym rozmiarze 
                 capacity = capacity*2; //tutaj zwiekszamy pojemnosc listy dwukrotnie ale tym razem samej zmiennej
@@ -66,13 +66,13 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
                 delete[] array; // usuwamy stara liste z pamieci
                 array = newlist; // przypisujemy nowa liste do starej nazwwy tej zmiennej
             } else {
-                return;
+                return; // jezeli nie trzeba to wychodzimy z funckji
             }
         }
 
-        void shrink_array()
+        void shrink_array() // funkcja sprawdzajaca czy mozna zmniejszyc rozmiar tablicy
         {
-            if (size == capacity/2)
+            if (size == capacity/2) // jezeli rozmiar funkcji jest o polowe mniejsza niz polowa rozmairu
             {
                 capacity = capacity/2; 
                 T* newlist = new T[capacity]; // tworzymy nowa liste ktora bedzie miala o polowe pomnijeszony rozmiar niz wczesniej 

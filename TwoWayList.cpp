@@ -3,16 +3,15 @@ template <typename T> class TwoWayList
 {
     private:
 
-        int size;
-        int capacity;
-        struct Cell
+        int size; // Rozmiar tablicy mowiacy ile jest elementow w tablicy
+        struct Cell // Strukt jednej komurki
         {
-            T data;
-            struct Cell *prev;
-            struct Cell *next;
+            T data; // Dane przechowywane w danej komurce
+            struct Cell *prev; // pointer do adresu ja poprzedzajacego 
+            struct Cell *next; // pointer do adresu nastepnego po niej
         };
-        struct Cell *head = nullptr;
-        struct Cell *tail = nullptr;
+        struct Cell *head = nullptr; // pointer head ktory odnosci sie do pierwszego adresu w liscie
+        struct Cell *tail = nullptr; // pointer tail  ktory odnosi sie do ostatniego adresu w liscie
 
     public:
 
@@ -22,17 +21,17 @@ template <typename T> class TwoWayList
             capacity = 1;
         }
 
-        void change_value_at_position(int location, T new_data)
+        void change_value_at_position(int location, T new_data) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
         {
-            Cell *prevcell = head;
-            for (int i=0;i<=location;i++)
+            Cell *prevcell = head; // utworzenie pointera ktory bedzie rowny head
+            for (int i=0;i<=location;i++) // przeiterowanie przez elementy w liscie az do momentu kiedy nasza lokalizacja bedzie sie zgadzac z adresem w kotry chcemy wpisac
             {
-                prevcell = prevcell->next;
+                prevcell = prevcell->next; // ustawienie prevcell na nastepny adres
             }
-            Cell *newcell = new Cell();
-            newcell->data = new_data;
-            newcell->next = prevcell->next;
-            prevcell->next = newcell;
+            Cell *newcell = new Cell(); // utworzenie nowej komurki
+            newcell->data = new_data; // przypisanie pointera nowej komurki do nowej danej podanej przez urzytkownika
+            newcell->next = prevcell->next; // przypisanie wartosci adresu nastepujacego po nowej komurce do wartsoci next poprzedniej komurki
+            prevcell->next = newcell; //
             newcell->prev = prevcell;
             if (newcell->next != nullptr)
             {

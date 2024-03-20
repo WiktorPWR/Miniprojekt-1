@@ -13,7 +13,8 @@ int main()
         //clasa.push_front(i);
         //clasa.pop_front();
     }
-    clasa.pop_back();
+    clasa.pop_front();
+    clasa.pop_front();
     clasa.print_TwoWayList();
     //clasa.print_array();
     std::cout << "hello" << std::endl;
