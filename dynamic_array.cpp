@@ -148,20 +148,26 @@ template <typename T> class TwoWayList
             newcell->prev = prevcell;
             if (newcell->next != nullptr)
             {
-                newcell->next = newcell;
-                newcell->prev = newcell;
+                newcell->next->prev = newcell;
             }
 
         }
         
-
         void push_front(T new_data)
         {
             Cell *newcell = new Cell();
             newcell->next = head;
             newcell->prev = nullptr;
             newcell->data = new_data;
+            if (head != nullptr) 
+            {
+                head->prev = newcell;
+            }
             head = newcell;
+            if (tail == nullptr) 
+            {
+                tail = newcell; // Jeśli lista jest pusta, ustawiamy też tail
+            }
         }
         
         void push_back(T new_data)
@@ -181,7 +187,46 @@ template <typename T> class TwoWayList
                 newcell->data = new_data;
             }
             tail = newcell;
-        } 
+        }
+
+        void pop_back() 
+        {
+            if (head == nullptr) {
+                std::cout << "Lista jest pusta, nie ma elementu do usunięcia.\n";
+                return;
+            }
+
+            if (head == tail) { // Jest tylko jeden element w liście
+                delete head;
+                head = nullptr;
+                tail = nullptr;
+            } else {
+                Cell *temp = tail;
+                tail = tail->prev;
+                tail->next = nullptr;
+                delete temp;
+            }
+        }
+
+        void pop_front()
+        {
+            if (head == nullptr) {
+                std::cout << "Lista jest pusta, nie ma elementu do usunięcia.\n";
+                return;
+            }
+
+            if (head == tail) { // Jest tylko jeden element w liście
+                delete head;
+                head = nullptr;
+                tail = nullptr;
+            } else {
+                Cell *temp = head;
+                head = head->next;
+                head->prev = nullptr;
+                delete temp;
+            }
+        }
+
 
         void print_double_list()
         {
@@ -196,7 +241,7 @@ template <typename T> class TwoWayList
 
 int main()
 {
-    DynamicArray <int> clasa; 
+    TwoWayList <int> clasa; 
     for (int i = 0; i <= 10; i++)
     {
         //clasa.push_back(i);
@@ -204,8 +249,9 @@ int main()
         clasa.push_front(i);
         //clasa.pop_front();
     }
-
-    clasa.print_array();
+    clasa.pop_back();
+    clasa.print_double_list();
+    //clasa.print_array();
     std::cout << "hello" << std::endl;
     return 0;
 }
