@@ -1,4 +1,4 @@
-
+#include <iostream>
 template <typename T> class TwoWayList
 {
     private:
@@ -79,11 +79,13 @@ template <typename T> class TwoWayList
 
         void pop_back() 
         {
-            if (head == nullptr) {
+            if (head == nullptr) 
+            {
                 return;
             }
 
-            if (head == tail) { // Jest tylko jeden element w liście
+            if (head == tail) 
+            { // Jest tylko jeden element w liście
                 delete head;
                 head = nullptr;
                 tail = nullptr;
@@ -97,11 +99,13 @@ template <typename T> class TwoWayList
 
         void pop_front()
         {
-            if (head == nullptr) {
+            if (head == nullptr) 
+            {
                 return;
             }
 
-            if (head == tail) { // Jest tylko jeden element w liście
+            if (head == tail) 
+            { // Jest tylko jeden element w liście
                 delete head;
                 head = nullptr;
                 tail = nullptr;
@@ -110,6 +114,16 @@ template <typename T> class TwoWayList
                 head = head->next;
                 head->prev = nullptr;
                 delete temp;
+            }
+        }
+
+        void print_TwoWayList()
+        {
+            Cell *current = head;
+            while (current != nullptr)
+            {
+                std::cout << current->data << std::endl;
+                current = current->next;
             }
         }
 };
