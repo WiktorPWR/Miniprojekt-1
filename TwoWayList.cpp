@@ -3,6 +3,7 @@ template <typename T> class TwoWayList
 {
     private:
 
+        int capacity;
         int size; // Rozmiar tablicy mowiacy ile jest elementow w tablicy
         struct Cell // Strukt jednej komurki
         {
