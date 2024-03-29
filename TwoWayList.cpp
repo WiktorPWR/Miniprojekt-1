@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 template <typename T> class TwoWayList
 {
     private:
@@ -20,6 +21,7 @@ template <typename T> class TwoWayList
         {
             size = 0;
             capacity = 1;
+            srand(time(0));
         }
 
         void change_value_at_position(int location, T new_data) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
@@ -56,6 +58,7 @@ template <typename T> class TwoWayList
             {
                 tail = newcell; // Jeśli lista jest pusta, ustawiamy też tail
             }
+            size++;
         }
         
         void push_back(T new_data)
@@ -75,6 +78,37 @@ template <typename T> class TwoWayList
                 newcell->data = new_data;
             }
             tail = newcell;
+            size++;
+        }
+
+        void push_random(T new_data)
+        {
+            if (size == 0) // Sprawdź, czy lista jest pusta
+            {
+                push_front(new_data); // Jeśli lista jest pusta, użyj funkcji push_front
+                return; // Zakończ funkcję
+            }
+
+            Cell *prevcell = head;
+            int location = std::rand() % size;
+            for (int i = 1; i < location; i++) // Poprawka warunku pętli
+            {
+                prevcell = prevcell->next;
+            }
+            Cell *newcell = new Cell();
+            newcell->data = new_data;
+            newcell->next = prevcell->next;
+            prevcell->next = newcell;
+            newcell->prev = prevcell;
+            if (newcell->next != nullptr)
+            {
+                newcell->next->prev = newcell;
+            }
+            else
+            {
+                tail = newcell; // Aktualizacja tail, jeśli nowy element jest dodawany na końcu listy
+            }
+            size++;
         }
 
         void pop_back() 
@@ -89,11 +123,13 @@ template <typename T> class TwoWayList
                 delete head;
                 head = nullptr;
                 tail = nullptr;
+                size--;
             } else {
                 Cell *temp = tail;
                 tail = tail->prev;
                 tail->next = nullptr;
                 delete temp;
+                size--;
             }
         }
 
@@ -109,11 +145,30 @@ template <typename T> class TwoWayList
                 delete head;
                 head = nullptr;
                 tail = nullptr;
+                size--;
             } else {
                 Cell *temp = head;
                 head = head->next;
                 head->prev = nullptr;
                 delete temp;
+                size--;
+            }
+        }
+
+        void pop_random()
+        {
+            if(size != 0)
+            {
+                Cell *prevcell = head;
+                int location = std::rand() % size;
+                for (int i=0;i<=location;i++)
+                {
+                    prevcell = prevcell->next;
+                }
+                prevcell->prev->next = prevcell->next;
+                prevcell->next->prev = prevcell->prev;
+                delete prevcell;
+                size--;
             }
         }
 
@@ -126,4 +181,10 @@ template <typename T> class TwoWayList
                 current = current->next;
             }
         }
+
+        int getSize()
+        {
+            return size;
+        }
+
 };

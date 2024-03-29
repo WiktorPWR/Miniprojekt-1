@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <time.h>
-#include <iostream>
+
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
@@ -152,23 +152,3 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 };
 
 
-int main(){
-    DynamicArray<int> array;
-    for (int i = 0; i< 10; i++)
-    {
-        array.push_random(i);
-    }
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    array.pop_random();
-    
-    array.print_array();
-
-}
