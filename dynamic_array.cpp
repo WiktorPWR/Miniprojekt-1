@@ -1,3 +1,6 @@
+#include <cstdlib>
+#include <time.h>
+#include <iostream>
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
@@ -11,6 +14,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             capacity = 1;   //dajemy rozmiar tablicy by w ogole moc ja stworzyc
             size = 0;   //nie mamy jeszcze zadnych elementow zatem nasz rozmiar bedzie rony 0
             array = new T[capacity];    //zaalokowanie nowej tablicy array o type T
+            srand(time(0));
         }
        
         int getSize(){return size;} // funkcja zwraca rozmiar talblicy
@@ -26,10 +30,13 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
         
         void pop_back() //funckja majaca na celu ,,wyrzucenie ostatniego elemtnetu z tablicy"
         {
-            array[size-1] = T(); //przyrownujemy wartosc ostatniego elementu talbicy do wartosc 0.
-            //T() to yrazenie ktore tworzy nowy obiekt typu T przy uzyciu konstruktora domyslnego a wartosc domylsna to jest 0
-            shrink_array();
-            size--; // pomnijeszenie rozmiary talbicy o jeden
+            if (size != 0)
+            {
+                array[size-1] = T(); //przyrownujemy wartosc ostatniego elementu talbicy do wartosc 0.
+                //T() to yrazenie ktore tworzy nowy obiekt typu T przy uzyciu konstruktora domyslnego a wartosc domylsna to jest 0
+                shrink_array();
+                size--; // pomnijeszenie rozmiary talbicy o jeden
+            }
         }
 
         void push_front(T value) // funckja majaca na celu ,,wsadzenie" nowego elementu o wartosci value na poczatek tablicy
@@ -45,12 +52,47 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 
         void pop_front() // funckja majaca na celu wyrzucenie pierwszego elementu
         {
-            shrink_array();
-            for (int i = 0;i <= size; i++) // iterowanie przez wsyzstkie elementy w liscie
+            if(size != 0)
             {
-                array[i] = array[i+1]; // wartosci komurek sa nadpisywane przez wartosci o jeden w lewo
+                shrink_array();
+                for (int i = 0;i <= size; i++) // iterowanie przez wsyzstkie elementy w liscie
+                {
+                    array[i] = array[i+1]; // wartosci komurek sa nadpisywane przez wartosci o jeden w lewo
+                }
+                size--; // zmniejszenie rozmiaru tablicy
             }
-            size--; // zmniejszenie rozmiaru tablicy
+        }
+
+        void push_random(T value)
+        {
+            grow_array();
+            if(size == 0)
+            {
+                array[0] = value;
+                size++;
+            }else{
+                int rand = std::rand() % size;
+                for (int i = size; i > rand; i--)
+                {
+                    array[i] = array[i-1];
+                }
+                array[rand] = value;
+                size++;
+            }
+        }
+
+        void pop_random()
+        {
+            if (size != 0)
+            {
+                shrink_array();
+                int rand = std::rand() % size;
+                for (int i = rand; i < size-1; i++)
+                {
+                    array[i] = array[i+1];
+                }
+                size--;
+            }
         }
 
         void grow_array() // funckja sprawdzajaca czy mozna ziwekszysc rozmiar tablicy jezeli tak robi to
@@ -101,6 +143,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             array[location] = value;
         }
         
+
         ~DynamicArray() //dekonostruktor
         {
             delete[] array; // usuwa caly array z pamiecie
@@ -109,3 +152,23 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 };
 
 
+int main(){
+    DynamicArray<int> array;
+    for (int i = 0; i< 10; i++)
+    {
+        array.push_random(i);
+    }
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    array.pop_random();
+    
+    array.print_array();
+
+}
