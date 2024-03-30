@@ -15,12 +15,12 @@ public:
     int Value;
     SLL *Next;
 
-    void Pushfront() {
+    void Pushfront(T data) {
 
-        int rand = std::rand() % 100 + 1;
+        //int rand = std::rand() % 100 + 1;
         Node *newnode = new Node();
         newnode->next = head;
-        newnode->value = rand;
+        newnode->value = data;
         head = newnode;
         size += 1;
     };
@@ -97,7 +97,7 @@ public:
 
     }
 
-    void Addrand(){
+    void Addrand(T data){
         if (head == NULL) {
             std::cout << "lista jest pusta";
         } else {
@@ -118,7 +118,7 @@ public:
                 New->next = current;
                 head = New;
             }
-            New->value = 69;
+            New->value = data;
 
         }
         size += 1;
@@ -181,46 +181,10 @@ public:
 
     }
 
+    int getSize()
+    {
+        return size;
+    }
+
 };
 
-
-
-
-int main() {
-    SLL <int> lista;
-    srand(time(0));
-
-    std::cout << "Generowanie 10 liczb od przodu. \n";
-    for(int i = 0; i < 10; i++){
-        lista.Pushfront();}
-    lista.Printlist();
-
-    lista.Find();
-
-    lista.Dltrand();
-    lista.Printlist();
-
-    lista.Addrand();
-    lista.Printlist();
-
-    std::cout << "Usuwanie liczby z przodu. \n";
-    lista.Dltfront();
-    lista.Printlist();
-
-    std::cout << "Usuwanie liczby z konca. \n";
-    lista.Dltback();
-    lista.Printlist();
-
-    std::cout << "Dodawanie liczby od konca. \n";
-    lista.Pushback(69);
-    lista.Printlist();
-
-    std::cout << "Zwalnianie pamieci. \n";
-    lista.~SLL();
-    lista.Printlist();
-
-
-
-    return 0;
-
-}
