@@ -96,18 +96,44 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
         std::cout << "3. push random" << std::endl;
         std::cin >> funkcja;
 
-        std::cout << "Dodaj sciezke pliku" << std::endl;
-        std::string sciezka;
-        std::cout << "Podaj sciezke do pliku: ";
-        std::getline(std::cin, sciezka);
-        std::ifstream plik(sciezka);
-        while(!plik.is_open()) {
-            std::cerr << "Nie udalo sie otworzyc pliku.\n";
-            std::cout << "Podaj sciezke jeszcze raz" << std::endl;
+        int wybor_pliku;
+        std::cout << "Chcesz uzyc wlasnego pliku czy moze automatycznego ?" << std::endl;
+        std::cout << "1. Wlasnego" << std::endl;
+        std::cout << "2. Automatycznego" << std::endl;
+        std::cin >> wybor_pliku;
+        
+        std::ifstream plik;
+
+        switch (wybor_pliku)
+        {
+        case 1:
+        {
+            std::cout << "Dodaj sciezke pliku" << std::endl;
+            std::string sciezka;
+            std::cout << "Podaj sciezke do pliku: ";
             std::getline(std::cin, sciezka);
-            std::ifstream plik(sciezka);
-            return ;
+            plik.open(sciezka);
+            while(!plik.is_open()) {
+                std::cerr << "Nie udalo sie otworzyc pliku.\n";
+                std::cout << "Podaj sciezke jeszcze raz" << std::endl;
+                std::getline(std::cin, sciezka);
+                std::ifstream plik(sciezka);
+                return ;
+            }
+            break;
         }
+        
+        case 2:
+            {
+            std::cout << "Jak duzo ma byc w niej elementow (podaj numer)" << std::endl;
+            int ilosc_elementow;
+            std::cin >> ilosc_elementow;
+            generate_array(ilosc_elementow);
+            plik.open("random_number_file.txt");
+            break;
+            }
+        }
+        
 
         switch (funkcja)
         {
@@ -211,44 +237,40 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
 }
 
 void twoWayListMenu(TwoWayList<int>& two_way_list) {
-    // Drugi poziom menu dla listy dwukierunkowej
     int numer_operacji;
-    std::cout << "Ustawianie wartosci na ktoych chcesz robic operacje  ? " << std::endl;
-    std::cout << "1. Recznie" << std::endl;
-    std::cout << "2. Wczytujac z pliku" << std::endl;
-    std::cout << "3. Wyswietl tablice" << std::endl;
+    std::cout << "Wybierz operacje:" << std::endl;
+    std::cout << "1. Ręcznie" << std::endl;
+    std::cout << "2. Wczytaj z pliku" << std::endl;
+    std::cout << "3. Wyświetl listę" << std::endl;
     std::cin >> numer_operacji;
 
     while (1 > numer_operacji || numer_operacji > 3) {
-        std::cout << std::endl << "PODAJ POPRAWNY NUMER ROZUMIESZ ?! Masz do wyboru albo 1 albo 2 albo 3" << std::endl;
+        std::cout << std::endl << "Podaj poprawny numer operacji (1, 2 lub 3): ";
         std::cin >> numer_operacji;
         std::cout << std::endl;
     }
-    switch (numer_operacji)
-    {
-    case 1:
-        {
+
+    switch (numer_operacji) {
+    case 1: {
         int funkcja;
-        std::cout << "Jaka funkcje chcesz uzyc ?" << std::endl;
+        std::cout << "Wybierz funkcję:" << std::endl;
         std::cout << "1. push back" << std::endl;
         std::cout << "2. pop back" << std::endl;
         std::cout << "3. push front" << std::endl;
         std::cout << "4. pop front" << std::endl;
         std::cout << "5. push random" << std::endl;
         std::cout << "6. pop random" << std::endl;
-        std::cout << "7. Zczytaj z pliku" << std::endl;
         std::cin >> funkcja;
 
         int ilosc_razy;
-        std::cout << "Ile razy ma byc wykonana dana operacja" << std::endl;
+        std::cout << "Podaj ilość operacji:" << std::endl;
         std::cin >> ilosc_razy;
 
-        // Logika wywoływania odpowiednich funkcji operacji na tablicy dynamicznej
         switch (funkcja) {
             case 1:
                 for (int i = 0; i < ilosc_razy; ++i) {
                     int element;
-                    std::cout << "Podaj element do dodania na koniec: ";
+                    std::cout << "Podaj element do dodania na końcu: ";
                     std::cin >> element;
                     two_way_list.push_back(element);
                 }
@@ -261,7 +283,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
             case 3:
                 for (int i = 0; i < ilosc_razy; ++i) {
                     int element;
-                    std::cout << "Podaj element do dodania na poczatku: ";
+                    std::cout << "Podaj element do dodania na początku: ";
                     std::cin >> element;
                     two_way_list.push_front(element);
                 }
@@ -284,15 +306,15 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
                     two_way_list.pop_random();
                 }
                 break;
+
             default:
                 std::cout << "Niepoprawny numer operacji!" << std::endl;
                 break;
         }
         break;
-        }
-    
-    case 2:
-        {
+    }
+
+    case 2: {
         int funkcja;
         std::cout << "Jak chcesz dodac wartosci z listy" << std::endl;
         std::cout << "1. push back" << std::endl;
@@ -300,157 +322,151 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
         std::cout << "3. push random" << std::endl;
         std::cin >> funkcja;
 
-        std::cout << "Dodaj sciezke pliku" << std::endl;
-        std::string sciezka;
-        std::cout << "Podaj sciezke do pliku: ";
-        std::getline(std::cin, sciezka);
-        std::ifstream plik(sciezka);
-        while(!plik.is_open()) {
-            std::cerr << "Nie udalo sie otworzyc pliku.\n";
-            std::cout << "Podaj sciezke jeszcze raz" << std::endl;
-            std::getline(std::cin, sciezka);
-            std::ifstream plik(sciezka);
-            return ;
-        }
+        int wybor_pliku;
+        std::cout << "Chcesz uzyc wlasnego pliku czy moze automatycznego ?" << std::endl;
+        std::cout << "1. Wlasnego" << std::endl;
+        std::cout << "2. Automatycznego" << std::endl;
+        std::cin >> wybor_pliku;
+        
+        std::ifstream plik;
 
-        switch (funkcja)
-        {
-        case 1:
-            {
+        switch (wybor_pliku) {
+            case 1: {
+                std::cout << "Podaj ścieżkę do pliku: ";
+                std::string sciezka;
+                std::cin >> sciezka;
+                plik.open(sciezka);
+                while (!plik.is_open()) {
+                    std::cerr << "Nie udało się otworzyć pliku.\n";
+                    std::cout << "Podaj ścieżkę jeszcze raz: ";
+                    std::cin >> sciezka;
+                    plik.open(sciezka);
+                }
+                break;
+            }
+            case 2: {
+                int ilosc_elementow;
+                std::cout << "Podaj ilość elementów do wygenerowania: ";
+                std::cin >> ilosc_elementow;
+                generate_array(ilosc_elementow);
+                // Otwórz plik do odczytu
+                plik.open("random_number_file.txt");
+                break;
+            }
+        }
+        
+        switch (funkcja) {
+            case 1: {
                 int wartosc_int;
-                while (plik >> wartosc_int) 
-                {
+                while (plik >> wartosc_int) {
                     two_way_list.push_back(wartosc_int);
                 }
                 break;
             }
-        case 2:
-            {
+            case 2: {
                 int wartosc_int;
-                while (plik >> wartosc_int) 
-                {
+                while (plik >> wartosc_int) {
                     two_way_list.push_front(wartosc_int);
                 }
                 break;
             }
-        case 3:
-            {
-
+            case 3: {
                 int wartosc_int;
-                while (plik >> wartosc_int)
-                {
+                while (plik >> wartosc_int) {
                     two_way_list.push_random(wartosc_int);
                 }
                 break;
             }
         }
 
-        std::cout << "Wsyztko sie udalo o to wartosci ktore sie znajduja w tej tablicy" << std::endl;
+        std::cout << "Wszystko się udało, oto wartości znajdujące się w tej liście:" << std::endl;
         two_way_list.print_TwoWayList();
 
-        std::cout << "Czy chcesz usunac wszystkie wartosci ?" << std::endl;
-        std::cout << "1. Tak za pomoca pop back" << std::endl;
-        std::cout << "2. Tak za pomoca pop front" << std::endl;
-        std::cout << "3. Tak za pomoca pop random" << std::endl;
-        std::cout << "4. Nie zostaw tak jak jest" << std::endl;
+        std::cout << "Czy chcesz usunąć wszystkie wartości?" << std::endl;
+        std::cout << "1. Tak, za pomocą pop back" << std::endl;
+        std::cout << "2. Tak, za pomocą pop front" << std::endl;
+        std::cout << "3. Tak, za pomocą pop random" << std::endl;
+        std::cout << "4. Nie, zostaw tak jak jest" << std::endl;
         
         int usuwanie;
         std::cin >> usuwanie;
-        while (1 > numer_operacji || numer_operacji > 4) {
-        std::cout << std::endl << "PODAJ POPRAWNY NUMER ROZUMIESZ ?! Masz do wyboru albo 1 albo 2" << std::endl;
-        std::cin >> numer_operacji;
-        std::cout << std::endl;
-        }
-        switch (usuwanie)
-        {
-        case 1:
-            {
-
+        switch (usuwanie) {
+            case 1: {
                 int size = two_way_list.getSize();
-                while (size != 0) 
-                {
+                while (size != 0) {
                     two_way_list.pop_back();
                     size--;
                 }
                 break;
             }
-        
-        case 2:
-            {
+            case 2: {
                 int size = two_way_list.getSize();
-                while (size != 0)
-                {
+                while (size != 0) {
                     two_way_list.pop_front();
                     size--;
                 }
                 break;
             }
-        case 3:
-            {
+            case 3: {
                 int size = two_way_list.getSize();
-                while (size != 0)
-                {
+                while (size != 0) {
                     two_way_list.pop_random();
                     size--;
                 }
                 break;
             }
-        default:
-            {
+            default: {
                 break;
             }
         }
-        // TO jest koniec glowneegho swwithca
         break;
-        }
+    }
 
-    case 3:
-        {
-            two_way_list.print_TwoWayList();
-            break;
-        }
+    case 3: {
+        two_way_list.print_TwoWayList();
+        break;
+    }
     }
 }
 
 void oneWayListMenu(SLL<int>& one_way_list)
 {
     int numer_operacji;
-    std::cout << "Ustawianie wartosci na ktoych chcesz robic operacje  ? " << std::endl;
+    std::cout << "Ustawianie wartosci na ktorych chcesz wykonywac operacje?" << std::endl;
     std::cout << "1. Recznie" << std::endl;
-    std::cout << "2. Wczytujac z pliku" << std::endl;
-    std::cout << "3. Wyswietl tablice" << std::endl;
+    std::cout << "2. Wczytaj z pliku" << std::endl;
+    std::cout << "3. Wyswietl liste" << std::endl;
     std::cin >> numer_operacji;
 
     while (1 > numer_operacji || numer_operacji > 3) {
-        std::cout << std::endl << "PODAJ POPRAWNY NUMER ROZUMIESZ ?! Masz do wyboru albo 1 albo 2 albo 3" << std::endl;
+        std::cout << std::endl << "PODAJ POPRAWNY NUMER ROZUMIESZ?! Masz do wyboru tylko 1, 2 lub 3." << std::endl;
         std::cin >> numer_operacji;
         std::cout << std::endl;
     }
+
     switch (numer_operacji)
     {
     case 1:
-        {
+    {
         int funkcja;
-        std::cout << "Jaka funkcje chcesz uzyc ?" << std::endl;
+        std::cout << "Wybierz funkcję:" << std::endl;
         std::cout << "1. push back" << std::endl;
         std::cout << "2. pop back" << std::endl;
         std::cout << "3. push front" << std::endl;
         std::cout << "4. pop front" << std::endl;
         std::cout << "5. push random" << std::endl;
         std::cout << "6. pop random" << std::endl;
-        std::cout << "7. Zczytaj z pliku" << std::endl;
         std::cin >> funkcja;
 
         int ilosc_razy;
-        std::cout << "Ile razy ma byc wykonana dana operacja" << std::endl;
+        std::cout << "Podaj ile razy ma być wykonana dana operacja:" << std::endl;
         std::cin >> ilosc_razy;
 
-        // Logika wywoływania odpowiednich funkcji operacji na tablicy dynamicznej
         switch (funkcja) {
             case 1:
                 for (int i = 0; i < ilosc_razy; ++i) {
                     int element;
-                    std::cout << "Podaj element do dodania na koniec: ";
+                    std::cout << "Podaj element do dodania na koncu: ";
                     std::cin >> element;
                     one_way_list.Pushback(element);
                 }
@@ -491,10 +507,10 @@ void oneWayListMenu(SLL<int>& one_way_list)
                 break;
         }
         break;
-        }
-    
+    }
+
     case 2:
-        {
+    {
         int funkcja;
         std::cout << "Jak chcesz dodac wartosci z listy" << std::endl;
         std::cout << "1. push back" << std::endl;
@@ -502,115 +518,110 @@ void oneWayListMenu(SLL<int>& one_way_list)
         std::cout << "3. push random" << std::endl;
         std::cin >> funkcja;
 
-        std::cout << "Dodaj sciezke pliku" << std::endl;
-        std::string sciezka;
-        std::cout << "Podaj sciezke do pliku: ";
-        std::getline(std::cin, sciezka);
-        std::ifstream plik(sciezka);
-        while(!plik.is_open()) {
-            std::cerr << "Nie udalo sie otworzyc pliku.\n";
-            std::cout << "Podaj sciezke jeszcze raz" << std::endl;
-            std::getline(std::cin, sciezka);
-            std::ifstream plik(sciezka);
-            return ;
+        std::ifstream plik;
+
+        int wybor_pliku;
+        std::cout << "Chcesz uzyc wlasnego pliku czy moze automatycznego ?" << std::endl;
+        std::cout << "1. Wlasnego" << std::endl;
+        std::cout << "2. Automatycznego" << std::endl;
+        std::cin >> wybor_pliku;
+
+        switch (wybor_pliku) {
+            case 1: {
+                std::cout << "Podaj sciezke do pliku: ";
+                std::string sciezka;
+                std::cin >> sciezka;
+                plik.open(sciezka);
+                while (!plik.is_open()) {
+                    std::cerr << "Nie udało się otworzyć pliku.\n";
+                    std::cout << "Podaj sciezke jeszcze raz: ";
+                    std::cin >> sciezka;
+                    plik.open(sciezka);
+                }
+                break;
+            }
+            case 2: {
+                int ilosc_elementow;
+                std::cout << "Podaj ilość elementow do wygenerowania: ";
+                std::cin >> ilosc_elementow;
+                generate_array(ilosc_elementow);
+                // Otwórz plik do odczytu
+                plik.open("random_number_file.txt");
+                break;
+            }
         }
 
-        switch (funkcja)
-        {
-        case 1:
-            {
+        switch (funkcja) {
+            case 1: {
                 int wartosc_int;
-                while (plik >> wartosc_int) 
-                {
+                while (plik >> wartosc_int) {
                     one_way_list.Pushback(wartosc_int);
                 }
                 break;
             }
-        case 2:
-            {
+            case 2: {
                 int wartosc_int;
-                while (plik >> wartosc_int) 
-                {
+                while (plik >> wartosc_int) {
                     one_way_list.Pushfront(wartosc_int);
                 }
                 break;
             }
-        case 3:
-            {
-
+            case 3: {
                 int wartosc_int;
-                while (plik >> wartosc_int)
-                {
+                while (plik >> wartosc_int) {
                     one_way_list.Addrand(wartosc_int);
                 }
                 break;
             }
         }
 
-        std::cout << "Wsyztko sie udalo o to wartosci ktore sie znajduja w tej tablicy" << std::endl;
+        std::cout << "Wszystko się udalo, oto wartosci znajdujace się w tej tablicy:" << std::endl;
         one_way_list.Printlist();
 
-        std::cout << "Czy chcesz usunac wszystkie wartosci ?" << std::endl;
-        std::cout << "1. Tak za pomoca pop back" << std::endl;
-        std::cout << "2. Tak za pomoca pop front" << std::endl;
-        std::cout << "3. Tak za pomoca pop random" << std::endl;
-        std::cout << "4. Nie zostaw tak jak jest" << std::endl;
-        
+        std::cout << "Czy chcesz usunąć wszystkie wartości?" << std::endl;
+        std::cout << "1. Tak, za pomocą pop back" << std::endl;
+        std::cout << "2. Tak, za pomocą pop front" << std::endl;
+        std::cout << "3. Tak, za pomocą pop random" << std::endl;
+        std::cout << "4. Nie, zostaw tak jak jest" << std::endl;
+
         int usuwanie;
         std::cin >> usuwanie;
-        while (1 > numer_operacji || numer_operacji > 4) {
-        std::cout << std::endl << "PODAJ POPRAWNY NUMER ROZUMIESZ ?! Masz do wyboru albo 1 albo 2" << std::endl;
-        std::cin >> numer_operacji;
-        std::cout << std::endl;
-        }
-        switch (usuwanie)
-        {
-        case 1:
-            {
-
+        switch (usuwanie) {
+            case 1: {
                 int size = one_way_list.getSize();
-                while (size != 0) 
-                {
+                while (size != 0) {
                     one_way_list.Dltback();
                     size--;
                 }
                 break;
             }
-        
-        case 2:
-            {
+            case 2: {
                 int size = one_way_list.getSize();
-                while (size != 0)
-                {
+                while (size != 0) {
                     one_way_list.Dltfront();
                     size--;
                 }
                 break;
             }
-        case 3:
-            {
+            case 3: {
                 int size = one_way_list.getSize();
-                while (size != 0)
-                {
+                while (size != 0) {
                     one_way_list.Dltrand();
                     size--;
                 }
                 break;
             }
-        default:
-            {
+            default: {
                 break;
             }
         }
-        // TO jest koniec glowneegho swwithca
         break;
-        }
+    }
 
-    case 3:
-        {
-            one_way_list.Printlist();
-            break;
-        }
+    case 3: {
+        one_way_list.Printlist();
+        break;
+    }
     }
 }
 
