@@ -239,9 +239,9 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
 void twoWayListMenu(TwoWayList<int>& two_way_list) {
     int numer_operacji;
     std::cout << "Wybierz operacje:" << std::endl;
-    std::cout << "1. Ręcznie" << std::endl;
+    std::cout << "1. Recznie" << std::endl;
     std::cout << "2. Wczytaj z pliku" << std::endl;
-    std::cout << "3. Wyświetl listę" << std::endl;
+    std::cout << "3. Wyswietl liste" << std::endl;
     std::cin >> numer_operacji;
 
     while (1 > numer_operacji || numer_operacji > 3) {
@@ -253,7 +253,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
     switch (numer_operacji) {
     case 1: {
         int funkcja;
-        std::cout << "Wybierz funkcję:" << std::endl;
+        std::cout << "Wybierz funkcje:" << std::endl;
         std::cout << "1. push back" << std::endl;
         std::cout << "2. pop back" << std::endl;
         std::cout << "3. push front" << std::endl;
@@ -263,7 +263,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
         std::cin >> funkcja;
 
         int ilosc_razy;
-        std::cout << "Podaj ilość operacji:" << std::endl;
+        std::cout << "Podaj ilosc operacji:" << std::endl;
         std::cin >> ilosc_razy;
 
         switch (funkcja) {
@@ -283,7 +283,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
             case 3:
                 for (int i = 0; i < ilosc_razy; ++i) {
                     int element;
-                    std::cout << "Podaj element do dodania na początku: ";
+                    std::cout << "Podaj element do dodania na poczatku: ";
                     std::cin >> element;
                     two_way_list.push_front(element);
                 }
@@ -332,13 +332,13 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
 
         switch (wybor_pliku) {
             case 1: {
-                std::cout << "Podaj ścieżkę do pliku: ";
+                std::cout << "Podaj sciezke do pliku: ";
                 std::string sciezka;
                 std::cin >> sciezka;
                 plik.open(sciezka);
                 while (!plik.is_open()) {
-                    std::cerr << "Nie udało się otworzyć pliku.\n";
-                    std::cout << "Podaj ścieżkę jeszcze raz: ";
+                    std::cerr << "Nie udało sie otworzyc pliku.\n";
+                    std::cout << "Podaj sciezke jeszcze raz: ";
                     std::cin >> sciezka;
                     plik.open(sciezka);
                 }
@@ -346,7 +346,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
             }
             case 2: {
                 int ilosc_elementow;
-                std::cout << "Podaj ilość elementów do wygenerowania: ";
+                std::cout << "Podaj ilosc elementów do wygenerowania: ";
                 std::cin >> ilosc_elementow;
                 generate_array(ilosc_elementow);
                 // Otwórz plik do odczytu
@@ -379,13 +379,13 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
             }
         }
 
-        std::cout << "Wszystko się udało, oto wartości znajdujące się w tej liście:" << std::endl;
+        std::cout << "Wszystko sie udało, oto wartosci znajdujace sie w tej liscie:" << std::endl;
         two_way_list.print_TwoWayList();
 
-        std::cout << "Czy chcesz usunąć wszystkie wartości?" << std::endl;
-        std::cout << "1. Tak, za pomocą pop back" << std::endl;
-        std::cout << "2. Tak, za pomocą pop front" << std::endl;
-        std::cout << "3. Tak, za pomocą pop random" << std::endl;
+        std::cout << "Czy chcesz usunac wszystkie wartosci?" << std::endl;
+        std::cout << "1. Tak, za pomoca pop back" << std::endl;
+        std::cout << "2. Tak, za pomoca pop front" << std::endl;
+        std::cout << "3. Tak, za pomoca pop random" << std::endl;
         std::cout << "4. Nie, zostaw tak jak jest" << std::endl;
         
         int usuwanie;
@@ -449,7 +449,7 @@ void oneWayListMenu(SLL<int>& one_way_list)
     case 1:
     {
         int funkcja;
-        std::cout << "Wybierz funkcję:" << std::endl;
+        std::cout << "Wybierz funkcje:" << std::endl;
         std::cout << "1. push back" << std::endl;
         std::cout << "2. pop back" << std::endl;
         std::cout << "3. push front" << std::endl;
@@ -533,7 +533,7 @@ void oneWayListMenu(SLL<int>& one_way_list)
                 std::cin >> sciezka;
                 plik.open(sciezka);
                 while (!plik.is_open()) {
-                    std::cerr << "Nie udało się otworzyć pliku.\n";
+                    std::cerr << "Nie udalo sie otworzyć pliku.\n";
                     std::cout << "Podaj sciezke jeszcze raz: ";
                     std::cin >> sciezka;
                     plik.open(sciezka);
@@ -542,7 +542,7 @@ void oneWayListMenu(SLL<int>& one_way_list)
             }
             case 2: {
                 int ilosc_elementow;
-                std::cout << "Podaj ilość elementow do wygenerowania: ";
+                std::cout << "Podaj ilosc elementow do wygenerowania: ";
                 std::cin >> ilosc_elementow;
                 generate_array(ilosc_elementow);
                 // Otwórz plik do odczytu
@@ -575,13 +575,13 @@ void oneWayListMenu(SLL<int>& one_way_list)
             }
         }
 
-        std::cout << "Wszystko się udalo, oto wartosci znajdujace się w tej tablicy:" << std::endl;
+        std::cout << "Wszystko sie udalo, oto wartosci znajdujace sie w tej tablicy:" << std::endl;
         one_way_list.Printlist();
 
-        std::cout << "Czy chcesz usunąć wszystkie wartości?" << std::endl;
-        std::cout << "1. Tak, za pomocą pop back" << std::endl;
-        std::cout << "2. Tak, za pomocą pop front" << std::endl;
-        std::cout << "3. Tak, za pomocą pop random" << std::endl;
+        std::cout << "Czy chcesz usunać wszystkie wartosci?" << std::endl;
+        std::cout << "1. Tak, za pomoca pop back" << std::endl;
+        std::cout << "2. Tak, za pomoca pop front" << std::endl;
+        std::cout << "3. Tak, za pomoca pop random" << std::endl;
         std::cout << "4. Nie, zostaw tak jak jest" << std::endl;
 
         int usuwanie;

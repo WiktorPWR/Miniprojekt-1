@@ -155,19 +155,30 @@ template <typename T> class TwoWayList
             }
         }
 
-        void pop_random()
+        void pop_random() 
         {
-            if(size != 0)
-            {
-                Cell *prevcell = head;
+            if (size != 0) {
                 int location = std::rand() % size;
-                for (int i=0;i<=location;i++)
-                {
-                    prevcell = prevcell->next;
+                if (location == 0) {
+                    // Usunięcie pierwszego elementu
+                    Cell* temp = head;
+                    head = head->next;
+                    if (head != nullptr) {
+                        head->prev = nullptr;
+                    }
+                    delete temp;
+                } else {
+                    // Usunięcie elementu na losowej pozycji
+                    Cell* prevcell = head;
+                    for (int i = 0; i < location; i++) {
+                        prevcell = prevcell->next;
+                    }
+                    prevcell->prev->next = prevcell->next;
+                    if (prevcell->next != nullptr) {
+                        prevcell->next->prev = prevcell->prev;
+                    }
+                    delete prevcell;
                 }
-                prevcell->prev->next = prevcell->next;
-                prevcell->next->prev = prevcell->prev;
-                delete prevcell;
                 size--;
             }
         }
