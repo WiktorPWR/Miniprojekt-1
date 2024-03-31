@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-template <typename T> class SLL {
+template <typename T> class SLL2 {
 
 private:
     int size = 0;
@@ -15,63 +15,69 @@ private:
 
 public:
     int Value;
-    SLL *Next;
+    SLL2 *Next;
 
-    void Pushfront() {
+    void Pushfront(T data) {
 
-        int rand = std::rand() % 100 + 1;
+        //int rand = std::rand() % 100 + 1;
         Node *newnode = new Node();
         if(head == NULL){
         newnode->next = head;
-        newnode->value = rand;
+        newnode->value = data;
         head = newnode;
         tail = newnode;
         } else {
             newnode->next = head;
-            newnode->value = rand;
+            newnode->value = data;
             head = newnode;
         }
         size += 1;
     };
 
     void Pushback(T data) {
+    Node *newnode = new Node();
+    newnode->value = data;
+    newnode->next = NULL;
 
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-
-            Node *current = tail;
-            Node *newnode = new Node();
-            current->next = newnode;
-            newnode->next = NULL;
-            newnode->value = data;
-            tail = newnode;
-
-        }
-        size += 1;
-    };
-
-    void Dltback(){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-            Node *current = head;
-            Node *a = current;
-            while (current != NULL) {
-                a = current;
-                current = current->next;
-                if(current->next == NULL){
-                    delete current;
-                    a->next = NULL;
-                    tail = a;
-                    break;
-                }
-
-            }
-        }
-        size -= 1;
-
+    if (head == NULL) {
+        head = newnode;
+        tail = newnode;
+    } else {
+        tail->next = newnode;
+        tail = newnode;
     }
+    size += 1;
+};
+
+
+    void Dltback() {
+    if (head != NULL) {
+        Node *current = head;
+        Node *prev = NULL;
+
+        // Przechodzimy przez listę, aby dotrzeć do ostatniego elementu
+        while (current->next != NULL) {
+            prev = current;
+            current = current->next;
+        }
+
+        // Usuwamy ostatni element z listy
+        delete current;
+
+        if (prev != NULL) {
+            // Jeśli lista ma więcej niż jeden element, ustawiamy poprzedni
+            // element tak, aby jego wskaźnik next wskazywał na NULL
+            prev->next = NULL;
+            tail = prev; // Aktualizujemy wskaźnik na ogon listy
+        } else {
+            // Usuwamy pierwszy element z listy
+            head = NULL;
+            tail = NULL; // Aktualizujemy wskaźnik na ogon listy
+        }
+
+        size -= 1;
+    }
+}
 
     void Dltrand(){
         if (head == NULL) {
@@ -165,7 +171,7 @@ public:
 
     };
 
-    ~SLL() {
+    ~SLL2() {
         while (head != nullptr) {
             Node *temp = head;
             head = head->next;
@@ -207,46 +213,13 @@ public:
 
     }
 
+    int getSize()
+    {
+        return size;
+    }
 };
 
 
 
 
-int main() {
-    SLL <int> lista;
-    srand(time(0));
 
-    std::cout << "Generowanie 10 liczb od przodu. \n";
-    for(int i = 0; i < 10; i++){
-        lista.Pushfront();}
-    lista.Printlist();
-
-    lista.Find();
-
-    lista.Dltrand();
-    lista.Printlist();
-
-    lista.Addrand();
-    lista.Printlist();
-
-    std::cout << "Usuwanie liczby z przodu. \n";
-    lista.Dltfront();
-    lista.Printlist();
-
-    std::cout << "Usuwanie liczby z konca. \n";
-    lista.Dltback();
-    lista.Printlist();
-
-    std::cout << "Dodawanie liczby od konca. \n";
-    lista.Pushback(69);
-    lista.Printlist();
-
-    std::cout << "Zwalnianie pamieci. \n";
-    lista.~SLL();
-    lista.Printlist();
-
-
-
-    return 0;
-
-}

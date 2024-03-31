@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <chrono>
+using namespace std::chrono;
 #include "dynamic_array.cpp"
 #include "TwoWayList.cpp"
 #include "OneWayList.cpp"
@@ -32,7 +34,6 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
         std::cout << "4. pop front" << std::endl;
         std::cout << "5. push random" << std::endl;
         std::cout << "6. pop random" << std::endl;
-        std::cout << "7. Zczytaj z pliku" << std::endl;
         std::cin >> funkcja;
 
         int ilosc_razy;
@@ -140,35 +141,47 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
         case 1:
             {
                 int wartosc_int;
+                //mierzenie czasu 
+                auto start = high_resolution_clock::now();
                 while (plik >> wartosc_int) 
                 {
                     dynamic_array.push_back(wartosc_int);
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas push back wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         case 2:
             {
                 int wartosc_int;
+                auto start = high_resolution_clock::now();
                 while (plik >> wartosc_int) 
                 {
                     dynamic_array.push_front(wartosc_int);
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas push front wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         case 3:
             {
-
                 int wartosc_int;
+                auto start = high_resolution_clock::now();
                 while (plik >> wartosc_int)
                 {
                     dynamic_array.push_random(wartosc_int);
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas push random wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         }
 
         std::cout << "Wsyztko sie udalo o to wartosci ktore sie znajduja w tej tablicy" << std::endl;
-        dynamic_array.print_array();
+        //dynamic_array.print_array();
 
         std::cout << "Czy chcesz usunac wszystkie wartosci ?" << std::endl;
         std::cout << "1. Tak za pomoca pop back" << std::endl;
@@ -189,32 +202,44 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
             {
 
                 int size = dynamic_array.getSize();
+                auto start = high_resolution_clock::now();
                 while (size != 0) 
                 {
                     dynamic_array.pop_back();
                     size--;
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas pop back wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         
         case 2:
             {
                 int size = dynamic_array.getSize();
+                auto start = high_resolution_clock::now();
                 while (size != 0)
                 {
                     dynamic_array.pop_front();
                     size--;
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas pop front wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         case 3:
             {
                 int size = dynamic_array.getSize();
+                auto start = high_resolution_clock::now();
                 while (size != 0)
                 {
                     dynamic_array.pop_random();
                     size--;
                 }
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<microseconds>(stop - start);
+                std::cout << "Czas pop front wynosi " << duration.count() << " microseconds" << std::endl;
                 break;
             }
         default:

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <time.h>
 
-template <typename T> class SLL {
+template <typename T> class SLL1 {
 
 private:
     int size = 0;
@@ -13,7 +13,7 @@ private:
     struct Node *head = NULL;
 public:
     int Value;
-    SLL *Next;
+    SLL1 *Next;
 
     void Pushfront(T data) {
 
@@ -26,46 +26,43 @@ public:
     };
 
     void Pushback(T data) {
-
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-            Node *current = head;
-            Node *newnode = new Node();
-            while (current != NULL) {
-                current = current->next;
-                if(current->next == NULL){
-                   current->next = newnode;
-                   newnode->next = NULL;
-                   newnode->value = data;
-                   break;
-                }
-
-            }
+    if (head == NULL) {
+        head = new Node();
+        head->value = data;
+        head->next = NULL;
+    } else {
+        Node *current = head;
+        while (current->next != NULL) {
+            current = current->next;
         }
-        size += 1;
-    };
+        current->next = new Node();
+        current->next->value = data;
+        current->next->next = NULL;
+    }
+    size += 1;
+};
 
-    void Dltback(){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
+
+    void Dltback() {
+    if (head != NULL) {
+        Node *current = head;
+        Node *prev = NULL;
+        while (current->next != NULL) {
+            prev = current;
+            current = current->next;
+        }
+        delete current;
+        if (prev != NULL) {
+            prev->next = NULL;
         } else {
-            Node *current = head;
-            Node *a = current;
-            while (current != NULL) {
-                a = current;
-                current = current->next;
-                if(current->next == NULL){
-                    delete current;
-                    a->next = NULL;
-                    break;
-                }
-
-            }
+            // Usuwamy pierwszy element z listy
+            head = NULL;
         }
         size -= 1;
-
     }
+    }
+
+    
 
     void Dltrand(){
         if (head == NULL) {
@@ -139,7 +136,7 @@ public:
 
     };
 
-    ~SLL() {
+    ~SLL1() {
         while (head != nullptr) {
             Node *temp = head;
             head = head->next;

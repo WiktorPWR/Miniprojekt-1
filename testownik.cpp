@@ -1,4 +1,35 @@
-for (int i = 0; i < ilosc_powtorzen; i++)
+#include <iostream> 
+#include <string>
+#include <fstream>
+#include <cstdlib>
+#include <chrono>
+using namespace std::chrono;
+
+#include "dynamic_array.cpp"
+#include "TwoWayList.cpp"
+#include "OneWayList.cpp"
+#include "generator.cpp"
+#include "OneWayList+Tail.cpp"
+
+int main()
+{
+    TwoWayList<int> two_way_list;
+    DynamicArray<int> dynamic_array;
+    SLL1<int> one_way_list1;
+    SLL2<int> one_way_list2;
+
+    std::cout << "Jak duzo ma byc w niej elementow? (podaj numer)" << std::endl;
+    int ilosc_elementow;
+    std::cin >> ilosc_elementow;
+
+    int ilosc_powtorzen;
+    std::cout << "Ile razy powtorzyc pomiar?" << std::endl;
+    std::cin >> ilosc_powtorzen;
+    
+    int array[8][ilosc_powtorzen];
+    
+
+    for (int i = 0; i < ilosc_powtorzen; i++)
     {
         generate_array(ilosc_elementow);
         std::ifstream plik("random_number_file.txt");
@@ -92,3 +123,16 @@ for (int i = 0; i < ilosc_powtorzen; i++)
 
         plik.close();
     }
+    
+    // Wyświetlenie wyników
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < ilosc_powtorzen; j++)
+        {
+            std::cout << array[i][j] << "\t";
+        }
+        std::cout << std::endl;
+    }
+    
+    return 0;
+}
