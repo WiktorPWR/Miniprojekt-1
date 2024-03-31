@@ -15,6 +15,11 @@ public:
     int Value;
     SLL1 *Next;
 
+    SLL1()
+    {
+        srand(time(0));
+    }
+
     void Pushfront(T data) {
 
         Node *newnode = new Node();
@@ -63,63 +68,55 @@ public:
 
     
 
-    void Dltrand(){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-            srand(time(0));
-            int rand = std::rand() % size + 1;
-            std::cout << "usuwanie " << rand << " elementu. \n";
-            Node *current = head;
-            Node *a;
-            if(rand > 1){
-            for(int i = 1; i < rand; i++){
-                a = current;
+   void Dltrand() {
+    if (head != nullptr) {
+        int randIndex = std::rand() % size; // Losowy indeks od 0 do size - 1
+        Node *current = head;
+        Node *prev = nullptr;
+
+        if (randIndex > 0) {
+            for (int i = 0; i < randIndex; i++) {
+                prev = current;
                 current = current->next;
             }
-                Node *next;
-                next = current->next;
-                a->next = next;
-                delete current;
-            }else{
-                a = current;
-                current= current->next;
-                delete a;
-                head = current;
+            if (prev != nullptr) {
+                prev->next = current->next;
+            } else {
+                head = current->next;
             }
-
-        }
-        size -= 1;
-
-    }
-
-    void Addrand(T data){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
+            delete current;
         } else {
-            srand(time(0));
-            int rand = std::rand() % size + 1;
-            std::cout << "dodawanie elementu na " << rand << " miejscu. \n";
-            Node *current = head;
-            Node *a;
-            Node *New = new Node();
-            if(rand > 1){
-                for(int i = 1; i < rand; i++){
-                    a = current;
-                    current = current->next;
-                }
-                New->next = current;
-                a->next = New;
-            }else{
-                New->next = current;
-                head = New;
-            }
-            New->value = data;
-
+            head = head->next;
+            delete current;
         }
-        size += 1;
-
+        size--;
     }
+}
+
+    void Addrand(T data) {
+    if (head != nullptr) {
+        int randIndex = std::rand() % size; // Losowy indeks od 0 do size - 1
+        Node *current = head;
+        Node *prev = nullptr;
+        Node *newNode = new Node();
+        newNode->value = data;
+
+        if (randIndex > 0) {
+            for (int i = 0; i < randIndex; i++) {
+                prev = current;
+                current = current->next;
+            }
+            newNode->next = current;
+            prev->next = newNode;
+        } else {
+            newNode->next = current;
+            head = newNode;
+        }
+        size++;
+    } else {
+        Pushback(data);
+    }
+}
 
     void Printlist() {
         if (head == NULL) {
@@ -144,7 +141,6 @@ public:
         }
         size = 0;
     }
-
 
     void Dltfront() {
         Node *a;

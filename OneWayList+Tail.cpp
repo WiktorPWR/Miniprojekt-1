@@ -17,6 +17,11 @@ public:
     int Value;
     SLL2 *Next;
 
+    SLL2()
+    {
+        srand(time(0));
+    }
+
     void Pushfront(T data) {
 
         //int rand = std::rand() % 100 + 1;
@@ -82,11 +87,10 @@ public:
 
     void Dltrand(){
         if (head == NULL) {
-            std::cout << "lista jest pusta";
+            //std::cout << "lista jest pusta";
         } else {
-            srand(time(0));
             int rand = std::rand() % size + 1;
-            std::cout << "usuwanie " << rand << " elementu. \n";
+            //std::cout << "usuwanie " << rand << " elementu. \n";
             Node *current = head;
             Node *a;
             if(rand > 1){
@@ -124,38 +128,46 @@ public:
 
     }
 
-    void Addrand(){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-            srand(time(0));
-            int rand = std::rand() % size + 1;
-            std::cout << "dodawanie elementu na " << rand << " miejscu. \n";
-            Node *current = head;
-            Node *a;
-            Node *New = new Node();
-            if(rand > 1){
-                for(int i = 1; i < rand; i++){
-                    a = current;
-                    current = current->next;
-                }
-                New->next = current;
-                a->next = New;
-            }else if(rand == 1){
-                New->next = current;
-                head = New;
-            }else if(rand == size){
-                Node *current = tail;
-                current->next = New;
-                New->next = NULL;
-                tail = New;
-            }
-            New->value = 69;
+    void Addrand(T data) {
+    int randIndex = std::rand() % (size + 1); // Losuj indeks od 0 do rozmiaru listy
+    Node *newNode = new Node();
+    newNode->value = data;
 
+    if (randIndex == 0) {
+        // Dodaj na początek listy
+        newNode->next = head;
+        head = newNode;
+        if (tail == NULL) {
+            // Lista była pusta, więc ustawiamy również ogon
+            tail = newNode;
         }
-        size += 1;
-
+    } else {
+        // Szukaj miejsca w liście, gdzie należy dodać nowy element
+        Node *current = head;
+        for (int i = 1; i < randIndex && current != NULL; i++) {
+            current = current->next;
+        }
+        if (current != NULL) {
+            newNode->next = current->next;
+            current->next = newNode;
+            if (newNode->next == NULL) {
+                // Nowy element został dodany na koniec listy, więc aktualizujemy ogon
+                tail = newNode;
+            }
+        } else {
+            // Lista jest pusta lub indeks wykracza poza jej zakres, więc dodaj na koniec
+            if (head == NULL) {
+                head = newNode;
+            }
+            if (tail != NULL) {
+                tail->next = newNode;
+            }
+            tail = newNode;
+        }
     }
+    size++;
+}
+
 
     void Printlist() {
         if (head == NULL) {
@@ -181,7 +193,6 @@ public:
         }
         size = 0;
     }
-
 
     void Dltfront() {
     if (head != NULL) {
