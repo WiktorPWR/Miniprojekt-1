@@ -39,7 +39,8 @@ int main()
         auto start1 = high_resolution_clock::now();
         while (plik >> wartosc_int) 
         {
-            dynamic_array.push_front(wartosc_int);
+            //dynamic_array.push_front(wartosc_int);
+            dynamic_array.push_back(wartosc_int);
         }
         auto stop1 = high_resolution_clock::now();
         auto duration1 = duration_cast<microseconds>(stop1 - start1);
@@ -49,7 +50,8 @@ int main()
         auto start2 = high_resolution_clock::now();
         while (dynamic_array.getSize() > 0) 
         {
-            dynamic_array.pop_front();
+            //dynamic_array.pop_front();
+            dynamic_array.pop_back();
         }
         auto stop2 = high_resolution_clock::now();
         auto duration2 = duration_cast<microseconds>(stop2 - start2);
@@ -61,7 +63,8 @@ int main()
         auto start3 = high_resolution_clock::now();
         while (plik >> wartosc_int) 
         {
-            one_way_list1.Pushfront(wartosc_int);
+            //one_way_list1.Pushfront(wartosc_int);
+            one_way_list1.Pushback(wartosc_int);
         }
         auto stop3 = high_resolution_clock::now();
         auto duration3 = duration_cast<microseconds>(stop3 - start3);
@@ -71,14 +74,15 @@ int main()
         auto start4 = high_resolution_clock::now();
         while (one_way_list1.getSize() > 0) 
         {
-            one_way_list1.Dltfront();
+            //one_way_list1.Dltfront();
+            one_way_list1.Dltback();
         }
         auto stop4 = high_resolution_clock::now();
         auto duration4 = duration_cast<microseconds>(stop4 - start4);
         array[3][i] = duration4.count();
 
 
-        std::cout << "Polowa minela" << std::endl;
+        //std::cout << "Polowa minela" << std::endl;
 
         // Push i pomiar czasu dla TwoWayList
         plik.clear();
@@ -86,7 +90,8 @@ int main()
         auto start5 = high_resolution_clock::now();
         while (plik >> wartosc_int) 
         {
-            two_way_list.push_front(wartosc_int);
+            //two_way_list.push_front(wartosc_int);
+            two_way_list.push_back(wartosc_int);
         }
         auto stop5 = high_resolution_clock::now();
         auto duration5 = duration_cast<microseconds>(stop5 - start5);
@@ -96,7 +101,8 @@ int main()
         auto start6 = high_resolution_clock::now();
         while (two_way_list.getSize() > 0) 
         {
-            two_way_list.pop_front();
+            //two_way_list.pop_front();
+            two_way_list.pop_back();
         }
         auto stop6 = high_resolution_clock::now();
         auto duration6 = duration_cast<microseconds>(stop6 - start6);
@@ -108,7 +114,8 @@ int main()
         auto start7 = high_resolution_clock::now();
         while (plik >> wartosc_int) 
         {
-            one_way_list2.Pushfront(wartosc_int);
+            //one_way_list2.Pushfront(wartosc_int);
+            one_way_list2.Pushback(wartosc_int);
         }
         auto stop7 = high_resolution_clock::now();
         auto duration7 = duration_cast<microseconds>(stop7 - start7);
@@ -118,7 +125,8 @@ int main()
         auto start8 = high_resolution_clock::now();
         while (one_way_list2.getSize() > 0) 
         {
-            one_way_list2.Dltfront();
+            //one_way_list2.Dltfront();
+            one_way_list2.Dltback();
         }
         auto stop8 = high_resolution_clock::now();
         auto duration8 = duration_cast<microseconds>(stop8 - start8);
@@ -127,15 +135,27 @@ int main()
         plik.close();
     }
     
-    // Wyświetlenie wyników
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < ilosc_powtorzen; j++)
-        {
-            std::cout << array[i][j] << "\t";
+    // // Wyświetlenie wyników
+    // long int srednie[8];
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     for (int j = 0; j < ilosc_powtorzen; j++)
+    //     {
+    //         //std::cout << array[i][j] << "\t";
+    //         srednie[i] = srednie[i] + array[i][j];
+    //     }
+    //     //std::cout << std::endl;
+    // }
+    double srednie[8] = {0}; // Użyjemy zmiennej double dla dokładniejszych obliczeń średnich
+
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < ilosc_powtorzen; j++) {
+            srednie[i] += array[i][j]; // Dodajemy czas wykonania do sumy
         }
-        std::cout << std::endl;
+        srednie[i] /= ilosc_powtorzen; // Obliczamy średnią dzieląc przez ilość powtórzeń
+        std::cout << srednie[i] << std::endl;
     }
+
     
     return 0;
 }

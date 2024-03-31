@@ -30,37 +30,37 @@ public:
     };
 
     void Pushback(T data) {
-    if (head == NULL) {
+    if (head == nullptr) {
         head = new Node();
         head->value = data;
-        head->next = NULL;
+        head->next = nullptr;
     } else {
         Node *current = head;
-        while (current->next != NULL) {
+        while (current->next != nullptr) {
             current = current->next;
         }
         current->next = new Node();
         current->next->value = data;
-        current->next->next = NULL;
+        current->next->next = nullptr;
     }
     size += 1;
-};
+    };
 
 
     void Dltback() {
-    if (head != NULL) {
+    if (head != nullptr) {
         Node *current = head;
-        Node *prev = NULL;
-        while (current->next != NULL) {
+        Node *prev = nullptr;
+        while (current->next != nullptr) {
             prev = current;
             current = current->next;
         }
         delete current;
-        if (prev != NULL) {
-            prev->next = NULL;
+        if (prev != nullptr) {
+            prev->next = nullptr;
         } else {
             // Usuwamy pierwszy element z listy
-            head = NULL;
+            head = nullptr;
         }
         size -= 1;
     }
