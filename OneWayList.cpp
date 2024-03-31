@@ -29,42 +29,47 @@ public:
         size += 1;
     };
 
-    void Pushback(T data) {
-    if (head == nullptr) {
-        head = new Node();
-        head->value = data;
-        head->next = nullptr;
-    } else {
-        Node *current = head;
-        while (current->next != nullptr) {
-            current = current->next;
+     void Pushback(T data) {
+        Node* newnode = new Node();
+        newnode->value = data;
+        newnode->next = nullptr;
+        if (head == nullptr) {
+            head = newnode;
+        } else {
+            Node* current = head;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = newnode;
         }
-        current->next = new Node();
-        current->next->value = data;
-        current->next->next = nullptr;
+        size++;
     }
-    size += 1;
-    };
 
 
     void Dltback() {
-    if (head != nullptr) {
-        Node *current = head;
-        Node *prev = nullptr;
-        while (current->next != nullptr) {
-            prev = current;
-            current = current->next;
-        }
+    if (head == nullptr) {
+        return; // Lista jest pusta, nie ma nic do usunięcia
+    }
+
+    Node* current = head;
+    Node* prev = nullptr;
+
+    while (current->next != nullptr) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (prev != nullptr) {
         delete current;
-        if (prev != nullptr) {
-            prev->next = nullptr;
-        } else {
-            // Usuwamy pierwszy element z listy
-            head = nullptr;
-        }
-        size -= 1;
+        prev->next = nullptr; // Ustawienie wskaźnika next poprzedniego elementu na nullptr
+    } else {
+        // Usuwamy pierwszy element z listy
+        delete head;
+        head = nullptr;
     }
-    }
+
+    size--;
+}
 
     
 

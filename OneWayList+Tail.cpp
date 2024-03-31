@@ -57,32 +57,34 @@ public:
 
 
     void Dltback() {
-    if (head != NULL) {
-        Node *current = head;
-        Node *prev = NULL;
-
-        // Przechodzimy przez listę, aby dotrzeć do ostatniego elementu
-        while (current->next != NULL) {
-            prev = current;
-            current = current->next;
-        }
-
-        // Usuwamy ostatni element z listy
-        delete current;
-
-        if (prev != NULL) {
-            // Jeśli lista ma więcej niż jeden element, ustawiamy poprzedni
-            // element tak, aby jego wskaźnik next wskazywał na NULL
-            prev->next = NULL;
-            tail = prev; // Aktualizujemy wskaźnik na ogon listy
-        } else {
-            // Usuwamy pierwszy element z listy
-            head = NULL;
-            tail = NULL; // Aktualizujemy wskaźnik na ogon listy
-        }
-
-        size -= 1;
+    if (head == nullptr) {
+        return; // Lista jest pusta, nie ma nic do usunięcia
     }
+
+    // Jeśli lista ma tylko jeden element, usuwamy go i aktualizujemy wskaźniki head i tail
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+        return;
+    }
+
+    // Znajdujemy przedostatni element
+    Node* prev = nullptr;
+    Node* current = head;
+    while (current->next != nullptr) {
+        prev = current;
+        current = current->next;
+    }
+
+    // Usuwamy ostatni element
+    delete current;
+
+    // Aktualizujemy wskaźniki head, tail i rozmiar listy
+    tail = prev;
+    prev->next = nullptr;
+    size--;
 }
 
     void Dltrand(){
