@@ -17,7 +17,6 @@ public:
 
     void Pushfront(T data) {
 
-        //int rand = std::rand() % 100 + 1;
         Node *newnode = new Node();
         newnode->next = head;
         newnode->value = data;

@@ -32,7 +32,8 @@ public:
             head = newnode;
         }
         size += 1;
-    };
+    }
+
 
     void Pushback(T data) {
     Node *newnode = new Node();
@@ -183,12 +184,18 @@ public:
 
 
     void Dltfront() {
-        Node *a;
-        a = head;
+    if (head != NULL) {
+        Node *a = head;
         head = head->next;
         delete a;
         size -= 1;
+
+        // Aktualizacja tail, jeśli usuwany był ostatni element
+        if (head == NULL) {
+            tail = NULL;
+        }
     }
+}
 
     void Find(){
         if (head == NULL) {

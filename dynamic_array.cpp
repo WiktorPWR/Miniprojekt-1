@@ -39,29 +39,41 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             }
         }
 
-        void push_front(T value) // funckja majaca na celu ,,wsadzenie" nowego elementu o wartosci value na poczatek tablicy
+        void push_front(T value) 
         {
-            grow_array();
-            for (int i = size;i >= 0; i--)// iteruje przez wysztkie elemetny w arrayu
-            {
-                array[i+1] = array[i]; // wartosci komurek zostana przesuniete o jeden w prawo w tablicy  
+            grow_array(); // Jeśli chcesz zwiększyć rozmiar tablicy, zakładam, że masz na to swoje przesłanki.
+
+            // Przesuwamy wszystkie elementy tablicy o jeden indeks w prawo, zaczynając od ostatniego elementu.
+            for (int i = size; i > 0; i--) {
+                array[i] = array[i - 1];
             }
-            array[0] = value; // przypisanie nowej wartosci do pierwszego elementu w tablicy
-            size++; // zwiekszenie rozmairu tablicy
+
+            // Wstawiamy nową wartość na początek tablicy.
+            array[0] = value;
+
+            // Zwiększamy rozmiar tablicy.
+            size++;
         }
 
-        void pop_front() // funckja majaca na celu wyrzucenie pierwszego elementu
+
+        void pop_front() 
         {
-            if(size != 0)
-            {
-                shrink_array();
-                for (int i = 0;i <= size; i++) // iterowanie przez wsyzstkie elementy w liscie
-                {
-                    array[i] = array[i+1]; // wartosci komurek sa nadpisywane przez wartosci o jeden w lewo
-                }
-                size--; // zmniejszenie rozmiaru tablicy
+        if (size != 0) {
+            shrink_array(); // Jeśli chcesz zmniejszyć rozmiar tablicy, zakładam, że masz na to swoje przesłanki.
+
+            // Przesuwamy wszystkie elementy tablicy o jeden indeks w lewo, zaczynając od drugiego elementu do przedostatniego.
+            for (int i = 0; i < size - 1; i++) {
+                array[i] = array[i + 1];
             }
+
+            // Ostatni element tablicy zostaje skasowany.
+            array[size - 1] = T(); // Ustawiamy ostatni element na domyślną wartość typu T.
+            
+            // Zmniejszamy rozmiar tablicy.
+            size--;
         }
+        }
+
 
         void push_random(T value)
         {
