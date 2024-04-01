@@ -29,6 +29,7 @@ int main()
     int array[8][ilosc_powtorzen];
     
 
+
     for (int i = 0; i < ilosc_powtorzen; i++)
     {
         generate_array(ilosc_elementow);
