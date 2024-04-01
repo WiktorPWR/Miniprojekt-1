@@ -99,25 +99,25 @@ public:
     void Addrand(T data) {
     if (head != nullptr) {
         int randIndex = std::rand() % size; // Losowy indeks od 0 do size - 1
-        Node *current = head;
-        Node *prev = nullptr;
-        Node *newNode = new Node();
-        newNode->value = data;
+        Node *current = head;// utworzenie pointera do head
+        Node *prev = nullptr;// utworzenie pointera wskazujacego do przedostatniego
+        Node *newNode = new Node();// utwoerznie nowego wezla
+        newNode->value = data;// przyrownanie wartosci nowego obiektu do naszej wartosci podanej przez uzytkownika
 
-        if (randIndex > 0) {
-            for (int i = 0; i < randIndex; i++) {
-                prev = current;
-                current = current->next;
+        if (randIndex > 0) { // jezeli nasze miejsce jest inne niz pierwsze
+            for (int i = 0; i < randIndex; i++) {// przewertowanie przez wszytkie wartosci az do naszej randIndex
+                prev = current;// przyrownanie wartosci prev do eleemntu poprzedzajacego randIndex 
+                current = current->next;// przyrownaine wartosci current do naszego poszukiwanego miejsca 
             }
-            newNode->next = current;
-            prev->next = newNode;
+            newNode->next = current;// ustawienie wartosci next nowego wezla do wartosci current
+            prev->next = newNode;// ustawieine next eleemnetu poprzedzajacego current do nowego wezla
         } else {
-            newNode->next = current;
-            head = newNode;
+            newNode->next = current;// przyrownainie wartosci next nowo powestalego wezla do current czyli elementu nastepnego po nim  w liscie
+            head = newNode;// ustawnienie pointer head do noweo powstalego wezla
         }
-        size++;
+        size++;// zwiekszenie ilosc elementow w liscie
     } else {
-        Pushback(data);
+        Pushback(data);// danie w pusta liste pierwszego elementu za pomoca pushback
     }
 }
 
@@ -126,7 +126,7 @@ public:
             std::cout << "lista jest pusta";
         } else {
             Node *current = head;
-            while (current != NULL) {
+            while (current != NULL) {// przewertowanie przez cala liste
                 std::cout << current->value << " ";
                 current = current->next;
             }
@@ -135,51 +135,51 @@ public:
 
     };
 
-    ~SLL1() {
-        while (head != nullptr) {
-            Node *temp = head;
-            head = head->next;
-            delete temp;
+    ~SLL1() {// Destruktor klasy SLL1
+    while (head != nullptr) { // Pętla wykonuje się dopóki istnieją węzły na liście
+        Node *temp = head; // Tworzenie tymczasowego wskaźnika na początek listy
+        head = head->next; // Przesunięcie wskaźnika na następny węzeł w liście
+        delete temp; // Usunięcie węzła, na który wskazuje tymczasowy wskaźnik
+    }
+    size = 0; // Zresetowanie wartości size na 0
+    }
 
+
+    void Dltfront() { // Funkcja usuwająca pierwszy element z listy
+    Node *a; // Deklaracja wskaźnika na węzeł
+    a = head; // Przypisanie wskaźnika na pierwszy element listy
+    head = head->next; // Aktualizacja wskaźnika na głowę listy, aby wskazywał na drugi element
+    delete a; // Usunięcie pierwszego elementu listy
+    size -= 1; // Zmniejszenie rozmiaru listy o 1
         }
-        size = 0;
-    }
 
-    void Dltfront() {
-        Node *a;
-        a = head;
-        head = head->next;
-        delete a;
-        size -= 1;
-    }
-
-    void Find(){
-        if (head == NULL) {
-            std::cout << "lista jest pusta";
-        } else {
-            Node *current = head;
-            int pozycja = 1;
-            int znalezienia = 0;
-            int rand = std::rand() % 100 + 1;
-            std::cout << "szukanie randomowej liczby: " << rand << "\n";
-            while (current != NULL) {
-                if(current->value == rand){
-                    std::cout << "znaleziono liczbe na " << pozycja << " miejscu! \n";
-                    znalezienia += 1;
+        void Find(){ // Funkcja wyszukująca losową liczbę w liście
+            if (head == NULL) { // Sprawdzenie, czy lista jest pusta
+                std::cout << "lista jest pusta"; // Komunikat o pustej liście
+            } else {
+                Node *current = head; // Ustawienie wskaźnika na bieżący element na początek listy
+                int pozycja = 1; // Inicjalizacja zmiennej przechowującej pozycję w liście
+                int znalezienia = 0; // Inicjalizacja zmiennej przechowującej liczbę znalezionych elementów
+                int rand = std::rand() % 100 + 1; // Wygenerowanie losowej liczby
+                std::cout << "szukanie randomowej liczby: " << rand << "\n"; // Wyświetlenie szukanej losowej liczby
+                while (current != NULL) { // Pętla przechodząca przez listę
+                    if(current->value == rand){ // Sprawdzenie, czy wartość bieżącego węzła jest równa szukanej liczbie
+                        std::cout << "znaleziono liczbe na " << pozycja << " miejscu! \n"; // Komunikat o znalezieniu liczby
+                        znalezienia += 1; // Inkrementacja liczby znalezionych elementów
+                    }
+                    pozycja += 1; // Zwiększenie pozycji w liście
+                    current = current->next; // Przesunięcie wskaźnika na następny węzeł
                 }
-                pozycja += 1;
-                current = current->next;
+                if(znalezienia == 0){ // Sprawdzenie, czy znaleziono jakiekolwiek elementy
+                    std::cout << "Nie znaleziono podanej liczby na liscie. \n"; // Komunikat o braku znalezienia liczby
+                }
             }
-            if(znalezienia == 0){ std::cout << "Nie znaleziono podanej liczby na liscie. \n";}
         }
 
-
-    }
-
-    int getSize()
-    {
-        return size;
-    }
+        int getSize() // Funkcja zwracająca rozmiar listy
+        {
+            return size; // Zwrócenie wartości zmiennej przechowującej rozmiar listy
+        }
 
 };
 

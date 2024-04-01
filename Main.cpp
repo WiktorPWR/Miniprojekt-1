@@ -454,7 +454,7 @@ void twoWayListMenu(TwoWayList<int>& two_way_list) {
     }
 }
 
-void oneWayListMenu(SLL<int>& one_way_list)
+void oneWayListMenu(SLL1<int>& one_way_list)
 {
     int numer_operacji;
     std::cout << "Ustawianie wartosci na ktorych chcesz wykonywac operacje?" << std::endl;
@@ -652,7 +652,7 @@ void oneWayListMenu(SLL<int>& one_way_list)
 
 int main() {
     DynamicArray<int> dynamic_array; // Tablica dynamiczna jest tworzona przed pętlą, aby zachować jej trwałość przez cały czas działania programu
-    SLL<int> one_way_list; 
+    SLL1<int> one_way_list; 
     TwoWayList<int> two_way_list;
     // Pierwszy poziom menu 
     while (true) {
