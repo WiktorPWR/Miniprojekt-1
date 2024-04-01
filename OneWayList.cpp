@@ -5,96 +5,94 @@
 template <typename T> class SLL1 {
 
 private:
-    int size = 0;
-    struct Node {
-        T value;
-        struct Node *next;
+    int size = 0;// Utworzenie zeminnej size ktora bedzie przetzymywac ile jest obiektow w naszej liscie
+    struct Node { // Utworzenie struktu ktory bedzie symbolizowac nasze wezly w tablicy
+        T value;// posiada on zmeinna w ktorej bedzie przetzymywana wartosc 
+        struct Node *next;// jak i rowniez pointer do elementu nastepnego w liscie
     };
-    struct Node *head = NULL;
+    struct Node *head = NULL; // Pointer do pierwszego miejsca w tablicy
 public:
-    int Value;
-    SLL1 *Next;
 
-    SLL1()
+    SLL1()// Konstruktor klasy
     {
-        srand(time(0));
+        srand(time(0));// Zainicjowanie generator liczb zmiennych
     }
 
-    void Pushfront(T data) {
+    void Pushfront(T data) { // Funckja ,,wkładająca" element na pierwsze miejsca w liscie
 
-        Node *newnode = new Node();
-        newnode->next = head;
-        newnode->value = data;
-        head = newnode;
-        size += 1;
+        Node *newnode = new Node();// Utworznie nowego obiektu typu Node 
+        newnode->next = head;// Przypisanie pointera nowego obiektu do head(poszczatku naszej lsity)
+        newnode->value = data;// Pypiszanie wartosci nowego obiektu do zmiennej podaj przez uzytkownika
+        head = newnode;// Przypisanie pointer head do nowego wezła by mogł na niego wskazywać
+        size += 1;// Zwiekszenie rozmiaru o jeden w tablicy
     };
 
-     void Pushback(T data) {
-        Node* newnode = new Node();
-        newnode->value = data;
-        newnode->next = nullptr;
-        if (head == nullptr) {
-            head = newnode;
+     void Pushback(T data) { // Funckja ,,wkładajaca" element na ostatnie miejsce w liscie
+        Node* newnode = new Node();// Utowrznie nowego obiektu typu Node
+        newnode->value = data;// Przypisanie pointera nowego obiektu do head(poszczatku naszej lsity)
+        newnode->next = nullptr; // Jako ze to koniec listy to pointer next nowego obiektu przypisujemy do nullptr poniewaz nie wskazuje on na zaden inny obikrt
+        if (head == nullptr) {// sprawdzneie czy lista jest pusta 
+            head = newnode;// Jezli  lista jest pusta nastepuje przypisanie pointer head do nowego wezła by mogł na niego wskazywać
         } else {
-            Node* current = head;
-            while (current->next != nullptr) {
+            Node* current = head;//Jezlei nie jest pusta tworzymy nowy wskaznik ktory wskazzuje na head
+            while (current->next != nullptr) {// Nastepuje przejscie przez cala liste az do momentu kiedy poinetr next komurki bedzie nullptr
                 current = current->next;
             }
-            current->next = newnode;
+            current->next = newnode;// Przypisanie wartosci pointera ostatniejgo miejsca w tablicy do nowego wezla przez nas utworzonego
         }
-        size++;
+        size++;// zwiekszenie rozmiaru o jeden
     }
 
 
-    void Dltback() {
+    void Dltback() {// Funkcja majaca na celu
     if (head == nullptr) {
         return; // Lista jest pusta, nie ma nic do usunięcia
     }
 
-    Node* current = head;
-    Node* prev = nullptr;
+    Node* current = head;// Utworzenie nowej zmiennej current pointujacej na head(poczatek listy)
+    Node* prev = nullptr;// Utworzenei nowej zmiennej prev pointujacej do niczego. Ma ona na celu znalezienie przed ostatniego elementu w liscie 
 
-    while (current->next != nullptr) {
+    while (current->next != nullptr) { // przejscie przez cala liste
         prev = current;
         current = current->next;
     }
 
-    if (prev != nullptr) {
-        delete current;
+    if (prev != nullptr) {// Kiedy jestesmy na przed ostatnim mijescu w talbicy
+        delete current;// usuwamy aktualny ostani element w tablicy
         prev->next = nullptr; // Ustawienie wskaźnika next poprzedniego elementu na nullptr
     } else {
         // Usuwamy pierwszy element z listy
-        delete head;
-        head = nullptr;
+        delete head;// usuniecie pierwszego lememtu w talbicy
+        head = nullptr;// przypisanie wartosci head jako nullptr
     }
 
-    size--;
+    size--;// zmniejszenie rozmairu tablicy o jeden
 }
 
     
 
    void Dltrand() {
-    if (head != nullptr) {
-        int randIndex = std::rand() % size; // Losowy indeks od 0 do size - 1
-        Node *current = head;
-        Node *prev = nullptr;
+    if (head != nullptr) { // Jezeli lista jest pusta
+        int randIndex = std::rand() % size; // Losowy indeks od 0 do size 
+        Node *current = head;// przypisanie pointera current do head
+        Node *prev = nullptr;// przypisanie prev na nullpritn. Zmiennea to bedzie wskazywac na element poprzedzajacy elelnt do usuniecie
 
-        if (randIndex > 0) {
-            for (int i = 0; i < randIndex; i++) {
-                prev = current;
-                current = current->next;
+        if (randIndex > 0) {// Jezeli bedzie operowac na kazdym innym adresie niz pierwszy
+            for (int i = 0; i < randIndex; i++) {// przechodzimy przez cala tablice az do miejsca randIndex ktore wybralismy
+                prev = current;// przypisanie wartosci prev do elemntu poprzedzajcego nasz do usuniecie
+                current = current->next;// przypisanie wartosci current do miejsca ktore chcmy usunac
             }
-            if (prev != nullptr) {
-                prev->next = current->next;
+            if (prev != nullptr) {// jezeli jest elment poprzedzajcy nasz lsite
+                prev->next = current->next;// przypisanei pointerowi poprzedzajacego elementu do wartosci nastpenej po current
             } else {
-                head = current->next;
+                head = current->next;// Jezlei nie mma elemntu poprzedzajacego wowczas head przypisujemy do wartosci current->next czyli w tym wypadku nullprt
             }
-            delete current;
+            delete current;// usuniecie naszego wezla
         } else {
-            head = head->next;
+            head = head->next;// Wartość pointera head zostaje zaktualizowana, aby wskazywała na następny węzeł po usuwanym węźle 
             delete current;
         }
-        size--;
+        size--;// zmniejszenie rozmiaru o jeden
     }
 }
 

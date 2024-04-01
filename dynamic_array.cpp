@@ -14,7 +14,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             capacity = 1;   //dajemy rozmiar tablicy by w ogole moc ja stworzyc
             size = 0;   //nie mamy jeszcze zadnych elementow zatem nasz rozmiar bedzie rony 0
             array = new T[capacity];    //zaalokowanie nowej tablicy array o type T
-            srand(time(0));
+            srand(time(0)); // Zaainicjopwanie randomowej wartosci
         }
        
         int getSize(){return size;} // funkcja zwraca rozmiar talblicy
@@ -77,33 +77,32 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 
         void push_random(T value)
         {
-            grow_array();
-            if(size == 0)
+            grow_array();// sprawdzenie czy mozna ppowikszyc array
+            if(size == 0)// Jesli lista jest pusta
             {
-                array[0] = value;
-                size++;
+                array[0] = value; // To pipisujemy nowa watyosc (value) do pierwszego miejsca w tablicy
             }else{
-                int rand = std::rand() % size;
-                for (int i = size; i > rand; i--)
+                int rand = std::rand() % size; // Generownaie liczby randomowej
+                for (int i = size; i > rand; i--)// Przesuniecie wszystkich wartosci na prawo (od miejsca gdzie damy nowa wartosc)  
                 {
                     array[i] = array[i-1];
                 }
-                array[rand] = value;
-                size++;
+                array[rand] = value;// Przypisanie w miejscu rand nowej wartosci
             }
+            size++;// Zwiekszenie rozmiaru o jeden
         }
 
         void pop_random()
         {
-            if (size != 0)
+            if (size != 0) // Sprawdzenie czy lista jest pusta
             {
-                shrink_array();
-                int rand = std::rand() % size;
-                for (int i = rand; i < size-1; i++)
+                shrink_array();// Sprawdzenie czy mozna zmniejszyc tablice
+                int rand = std::rand() % size; // Generowanie liczby randomowej
+                for (int i = rand; i < size-1; i++) // Przesuniecie wszystkich wartosci na prawo od naszego miejsca rand w lewo o jedno miejsce
                 {
                     array[i] = array[i+1];
                 }
-                size--;
+                size--;// Zmnnijeszenie rozmiaru tablict
             }
         }
 
