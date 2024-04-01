@@ -3,9 +3,9 @@
 #include <fstream>
 #include <chrono>
 using namespace std::chrono;
-#include "dynamic_array.cpp"
-#include "TwoWayList.cpp"
-#include "OneWayList.cpp"
+#include "struktury_danych/dynamic_array.cpp"
+#include "struktury_danych/TwoWayList.cpp"
+#include "struktury_danych/OneWayList.cpp"
 #include "generator.cpp"
 
 void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
