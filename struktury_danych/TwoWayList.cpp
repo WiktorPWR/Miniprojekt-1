@@ -198,4 +198,32 @@ public:
         return size;
     }
 
+    void Find(T data_to_find)
+    {
+        Cell* current = head;
+        int position = 0;
+        while (current->next != nullptr)
+        {
+            if (current->data == data_to_find)
+            {
+                std::cout << "Znaleziono go na miesjcu " << position << std::endl;
+                break;
+            }
+            position++;
+            current = current->next;
+        }
+        return; 
+    }
+
 };
+
+int main()
+{
+    TwoWayList<int> two_way_list;
+    for (int i=0;i<10;i++)
+    {
+        two_way_list.push_back(i);
+    }
+    two_way_list.Find(0);
+}
+
