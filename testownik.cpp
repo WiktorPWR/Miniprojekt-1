@@ -136,17 +136,6 @@ int main()
         plik.close();
     }
     
-    // // Wyświetlenie wyników
-    // long int srednie[8];
-    // for (int i = 0; i < 8; i++)
-    // {
-    //     for (int j = 0; j < ilosc_powtorzen; j++)
-    //     {
-    //         //std::cout << array[i][j] << "\t";
-    //         srednie[i] = srednie[i] + array[i][j];
-    //     }
-    //     //std::cout << std::endl;
-    // }
     long double srednie[8] = {0}; // Użyjemy zmiennej double dla dokładniejszych obliczeń średnich
 
     for (int i = 0; i < 8; i++) {
