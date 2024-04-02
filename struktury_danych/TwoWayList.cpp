@@ -217,13 +217,4 @@ public:
 
 };
 
-int main()
-{
-    TwoWayList<int> two_way_list;
-    for (int i=0;i<10;i++)
-    {
-        two_way_list.push_back(i);
-    }
-    two_way_list.Find(0);
-}
 
