@@ -41,7 +41,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
 
         void Find(){ // Funkcja wyszukująca losową liczbę w liście
 
-            for (int i = size; i > 0; i--) {
+            for (int i = 0; i < size; i++) {
                 if(array[i] == 18){
                     break;
                 };

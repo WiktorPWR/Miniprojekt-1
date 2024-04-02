@@ -24,6 +24,16 @@ public:
         srand(time(0));
     }
 
+    ~TwoWayList() {// Destruktor klasy
+        while (head != nullptr) { // Pętla wykonuje się dopóki istnieją węzły na liście
+            Cell *temp = head; // Tworzenie tymczasowego wskaźnika na początek listy
+            head = head->next; // Przesunięcie wskaźnika na następny węzeł w liście
+            delete temp; // Usunięcie węzła, na który wskazuje tymczasowy wskaźnik
+        }
+        tail = nullptr;
+        size = 0; // Zresetowanie wartości size na 0
+    }
+
     void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
     {
 

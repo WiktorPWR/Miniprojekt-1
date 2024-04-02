@@ -168,6 +168,7 @@ public:
             head = head->next; // Przesunięcie wskaźnika na głowę listy na następny węzeł
             delete temp; // Usunięcie węzła, na który wskazuje wskaźnik tymczasowy
         }
+        tail = nullptr;
         size = 0; // Zresetowanie rozmiaru listy
     }
 

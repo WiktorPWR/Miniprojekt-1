@@ -164,6 +164,44 @@ public:
             }
             }
 
+    void Find1(){ // Funkcja wyszukująca losową liczbę w liście
+
+        Node *current = head;
+        Node *prevcurrent;
+        Node *pprevcurrent;
+        Node *pprevtail;
+        Node *prevtail;
+        Node *newtail;
+        while (current != NULL) {// przewertowanie przez cala liste
+            prevcurrent = current;
+            current = current->next;
+            if(current->next == NULL){
+                newtail = current;
+                prevtail = prevcurrent;
+            }else if(current->next == prevtail){
+                newtail = prevtail;
+                prevtail = current;
+            /*Node *current1 = head;
+            Node *prevcurrent1 = NULL;
+            while (current1 != NULL){
+                if(current1->next == NULL){
+                    newtail = current1;
+                    prevtail = prevcurrent1;
+                }else if(current1->next == prevtail){
+                    newtail = prevtail;
+                    prevtail = current1;
+                    break;
+                }
+                prevcurrent1 = current1;
+                current1 = current1->next;
+
+            }*/
+            if(current->value == 18 || prevtail->value == 18){
+                break;
+            }
+        }
+    }}
+
 
 
     void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
