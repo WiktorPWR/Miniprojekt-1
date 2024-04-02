@@ -184,27 +184,27 @@ public:
         }
     }
 
-    void Find() { // Wyszukiwanie losowej liczby w liście
-        if (head == NULL) { // Jeśli lista jest pusta
-            std::cout << "lista jest pusta"; // Wyświetl komunikat
-        } else { // Jeśli lista nie jest pusta
-            Node *current = head; // Ustawienie wskaźnika na bieżący węzeł na początek listy
-            int pozycja = 1; // Inicjalizacja zmiennej przechowującej pozycję w liście
-            int znalezienia = 0; // Inicjalizacja zmiennej przechowującej liczbę znalezionych elementów
-            int rand = std::rand() % 100 + 1; // Wylosowanie liczby od 1 do 100
-            std::cout << "szukanie randomowej liczby: " << rand << "\n"; // Wyświetlenie losowej liczby
-            while (current != NULL) { // Dopóki nie dojdziemy do końca listy
-                if(current->value == rand){ // Jeśli wartość bieżącego węzła jest równa losowej liczbie
-                    std::cout << "znaleziono liczbe na " << pozycja << " miejscu! \n"; // Wyświetl informację o znalezieniu liczby
-                    znalezienia += 1; // Zwiększenie liczby znalezionych elementów
-                }
-                pozycja += 1; // Zwiększenie pozycji w liście
-                current = current->next; // Przesunięcie wskaźnika na bieżący węzeł na następny węzeł
-            }
-            if(znalezienia == 0){ // Jeśli nie znaleziono żadnego elementu
-                std::cout << "Nie znaleziono podanej liczby na liscie. \n\n"; // Wyświetl komunikat
-            }
+    void Find(){ // Funkcja wyszukująca losową liczbę w liście
+
+        Node *current = head;
+        while (current != NULL) {// przewertowanie przez cala liste
+            if (current->value == 18)
+                break;
+
+            current = current->next;
         }
+    }
+
+    void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
+    {
+
+        Node *cell = head; // utworzenie pointera ktory bedzie rowny head
+        for (int i=0;i<=location;i++) // przeiterowanie przez elementy w liscie az do momentu kiedy nasza lokalizacja bedzie sie zgadzac z adresem w kotry chcemy wpisac
+        {
+            cell = cell->next; // ustawienie prevcell na nastepny adres
+        }
+        cell->value = 18;
+
     }
 
     int getSize() { // Pobieranie rozmiaru listy

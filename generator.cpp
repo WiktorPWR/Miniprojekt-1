@@ -2,7 +2,7 @@
 #include <fstream> // Biblioteka do obsługi plików
 #include <stdlib.h> // Biblioteka do zarządzania pamięcią i przetwarzania napisów
 #include <time.h> // Biblioteka do operacji na czasie
-
+/*
 void generate_array(int size_of_array) // Funkcja do generowania tablicy losowych liczb
 {
     std::ofstream Myfile("random_number_file.txt"); // Tworzenie obiektu do zapisu do pliku o nazwie "random_number_file.txt"
@@ -19,3 +19,4 @@ void generate_array(int size_of_array) // Funkcja do generowania tablicy losowyc
     
     Myfile.close(); // Zamknięcie pliku
 }
+*/

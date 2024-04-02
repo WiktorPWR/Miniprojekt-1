@@ -24,23 +24,23 @@ public:
         srand(time(0));
     }
 
-    void change_value_at_position(int location, T new_data) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
+    void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
     {
-        Cell *prevcell = head; // utworzenie pointera ktory bedzie rowny head
+
+        Cell *cell = head; // utworzenie pointera ktory bedzie rowny head
         for (int i=0;i<=location;i++) // przeiterowanie przez elementy w liscie az do momentu kiedy nasza lokalizacja bedzie sie zgadzac z adresem w kotry chcemy wpisac
         {
-            prevcell = prevcell->next; // ustawienie prevcell na nastepny adres
+            cell = cell->next; // ustawienie prevcell na nastepny adres
         }
-        Cell *newcell = new Cell(); // utworzenie nowej komurki
-        newcell->data = new_data; // przypisanie pointera nowej komurki do nowej danej podanej przez urzytkownika
-        newcell->next = prevcell->next; // przypisanie wartosci adresu nastepujacego po nowej komurce do wartsoci next poprzedniej komurki
-        prevcell->next = newcell; //
-        newcell->prev = prevcell;
-        if (newcell->next != nullptr)
-        {
-            newcell->next->prev = newcell;
-        }
+        cell->data = 18;
 
+    }
+
+    void Addtofind(int ilosc_elemntow){
+        std::cout<< "Na jakim miejscu dodać liczbę 18?" << ilosc_elemntow/3 << " " << ilosc_elemntow/2 << " " << 2*ilosc_elemntow/3;
+        int data;
+        std::cin >> data;
+        change_value_at_position(data, 18);
     }
     
     void push_front(T new_data)
@@ -198,4 +198,16 @@ public:
         return size;
     }
 
+    void Find(){
+        Cell *front = head;
+        Cell *back = tail;
+        while (front != nullptr && back != nullptr && front != back && front->prev != back) {
+            if (front->data == 18 || back->data == 18) {
+                break;
+            }
+            front = front->next;
+            back = back->prev;
+        }
+    }
 };
+

@@ -39,6 +39,15 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             }
         }
 
+        void Find(){ // Funkcja wyszukująca losową liczbę w liście
+
+            for (int i = size; i > 0; i--) {
+                if(array[i] == 18){
+                    break;
+                };
+            }
+        }
+
         void push_front(T value) 
         {
             grow_array(); // Jeśli chcesz zwiększyć rozmiar tablicy, zakładam, że masz na to swoje przesłanki.
@@ -140,18 +149,18 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             }
         }
 
-        void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
+        /*void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
         {
             for(int i=0;i<size;i++)
             {
                 std::cout << array[i] << std::endl;
             }
             std::cout << "Size is " << getSize() << std::endl << "Capasity is " << getCapasity() << std::endl;
-        }
+        }*/
 
-        void change_value_at_position(int location, T value) // funckja majaca na celu zmiene wartosci w daenj konktretej lokalizacji 
+        void change_value_at_position(int location) // funckja majaca na celu zmiene wartosci w daenj konktretej lokalizacji
         {
-            array[location] = value;
+            array[location] = 18;
         }
         
 

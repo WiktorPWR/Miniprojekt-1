@@ -8,8 +8,28 @@ using namespace std::chrono;
 #include "struktury_danych/dynamic_array.cpp"
 #include "struktury_danych/TwoWayList.cpp"
 #include "struktury_danych/OneWayList.cpp"
-#include "generator.cpp"
+//#include "generator.cpp"
 #include "struktury_danych/OneWayList+Tail.cpp"
+
+void generate_array(int size_of_array) // Funkcja do generowania tablicy losowych liczb
+{
+    std::ofstream Myfile("random_number_file.txt"); // Tworzenie obiektu do zapisu do pliku o nazwie "random_number_file.txt"
+    if (Myfile.is_open()) // Sprawdzenie, czy udało się otworzyć plik
+    {
+        int random_number = 0; // Deklaracja zmiennej przechowującej losową liczbę
+        srand(time(NULL)); // Inicjalizacja generatora liczb pseudolosowych
+        for (int i = 0; i <= size_of_array; i++) // Pętla generująca losowe liczby i zapisująca je do pliku
+        {
+            random_number = rand() % 16 + 1; // Generowanie losowej liczby z zakresu od 1 do 16
+            Myfile << random_number << std::endl; // Zapisanie wygenerowanej liczby do pliku, zakończenie linii
+        }
+    }
+
+    Myfile.close(); // Zamknięcie pliku
+};
+
+
+
 
 int main()
 {
@@ -26,7 +46,7 @@ int main()
     std::cout << "Ile razy powtorzyc pomiar?" << std::endl;
     std::cin >> ilosc_powtorzen;
     
-    int array[8][ilosc_powtorzen];
+    int array[11][ilosc_powtorzen];
     
 
     for (int i = 0; i < ilosc_powtorzen; i++)
@@ -45,6 +65,18 @@ int main()
         auto stop1 = high_resolution_clock::now();
         auto duration1 = duration_cast<microseconds>(stop1 - start1);
         array[0][i] = duration1.count();
+
+        dynamic_array.change_value_at_position(ilosc_elementow/3);
+
+        auto start12 = high_resolution_clock::now();
+
+        dynamic_array.Find();
+
+        auto stop12 = high_resolution_clock::now();
+        auto duration12 = duration_cast<microseconds>(stop12 - start12);
+        array[11][i] = duration12.count();
+
+        plik.close();
 
         // Pop i pomiar czasu dla DynamicArray
         auto start2 = high_resolution_clock::now();
@@ -69,6 +101,16 @@ int main()
         auto stop3 = high_resolution_clock::now();
         auto duration3 = duration_cast<microseconds>(stop3 - start3);
         array[2][i] = duration3.count();
+
+        one_way_list1.change_value_at_position(ilosc_elementow/3);
+
+        auto start9 = high_resolution_clock::now();
+
+        one_way_list1.Find();
+
+        auto stop9 = high_resolution_clock::now();
+        auto duration9 = duration_cast<microseconds>(stop9 - start9);
+        array[8][i] = duration9.count();
 
         // Pop i pomiar czasu dla SLL1
         auto start4 = high_resolution_clock::now();
@@ -97,6 +139,16 @@ int main()
         auto duration5 = duration_cast<microseconds>(stop5 - start5);
         array[4][i] = duration5.count();
 
+        two_way_list.change_value_at_position(ilosc_elementow/3);
+
+        auto start11 = high_resolution_clock::now();
+
+        two_way_list.Find();
+
+        auto stop11 = high_resolution_clock::now();
+        auto duration11 = duration_cast<microseconds>(stop11 - start11);
+        array[10][i] = duration11.count();
+
         // Pop i pomiar czasu dla TwoWayList
         auto start6 = high_resolution_clock::now();
         while (two_way_list.getSize() > 0) 
@@ -121,6 +173,16 @@ int main()
         auto duration7 = duration_cast<microseconds>(stop7 - start7);
         array[6][i] = duration7.count();
 
+        one_way_list2.change_value_at_position(ilosc_elementow/3);
+
+        auto start10 = high_resolution_clock::now();
+
+        one_way_list2.Find();
+
+        auto stop10 = high_resolution_clock::now();
+        auto duration10 = duration_cast<microseconds>(stop10 - start10);
+        array[9][i] = duration10.count();
+
         // Pop i pomiar czasu dla SLL2
         auto start8 = high_resolution_clock::now();
         while (one_way_list2.getSize() > 0) 
@@ -132,7 +194,6 @@ int main()
         auto duration8 = duration_cast<microseconds>(stop8 - start8);
         array[7][i] = duration8.count();
 
-        plik.close();
     }
     
     // // Wyświetlenie wyników
@@ -146,9 +207,9 @@ int main()
     //     }
     //     //std::cout << std::endl;
     // }
-    long double srednie[8] = {0}; // Użyjemy zmiennej double dla dokładniejszych obliczeń średnich
+    long double srednie[12] = {0}; // Użyjemy zmiennej double dla dokładniejszych obliczeń średnich
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 12; i++) {
         for (int j = 0; j < ilosc_powtorzen; j++) {
             srednie[i] += array[i][j]; // Dodajemy czas wykonania do sumy
         }
