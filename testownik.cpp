@@ -11,6 +11,10 @@ using namespace std::chrono;
 //#include "generator.cpp"
 #include "struktury_danych/OneWayList+Tail.cpp"
 
+<<<<<<< HEAD
+
+
+=======
 void generate_array(int size_of_array) // Funkcja do generowania tablicy losowych liczb
 {
     std::ofstream Myfile("random_number_file.txt"); // Tworzenie obiektu do zapisu do pliku o nazwie "random_number_file.txt"
@@ -31,6 +35,7 @@ void generate_array(int size_of_array) // Funkcja do generowania tablicy losowyc
 
 
 
+>>>>>>> 06c3615fef19bd13fff17b647ee8c711525d9686
 int main()
 {
     TwoWayList<int> two_way_list;
