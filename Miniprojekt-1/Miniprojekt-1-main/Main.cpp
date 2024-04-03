@@ -17,7 +17,6 @@ void dynamicArrayMenu(DynamicArray<int>& dynamic_array) {
     std::cout << "1. Recznie" << std::endl;
     std::cout << "2. Wczytujac z pliku" << std::endl;
     std::cout << "3. Wyswietl tablice" << std::endl;
-    std::cout << "4. Auto test" << std::endl;
     std::cin >> numer_operacji;
 
     while (1 > numer_operacji || numer_operacji > 3) {
