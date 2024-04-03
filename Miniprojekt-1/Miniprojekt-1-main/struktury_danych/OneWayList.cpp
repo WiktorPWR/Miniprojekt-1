@@ -153,28 +153,68 @@ public:
     size -= 1; // Zmniejszenie rozmiaru listy o 1
         }
 
-        void Find(){ // Funkcja wyszukująca losową liczbę w liście
-            if (head == NULL) { // Sprawdzenie, czy lista jest pusta
-                std::cout << "lista jest pusta"; // Komunikat o pustej liście
-            } else {
-                Node *current = head; // Ustawienie wskaźnika na bieżący element na początek listy
-                int pozycja = 1; // Inicjalizacja zmiennej przechowującej pozycję w liście
-                int znalezienia = 0; // Inicjalizacja zmiennej przechowującej liczbę znalezionych elementów
-                int rand = std::rand() % 100 + 1; // Wygenerowanie losowej liczby
-                std::cout << "szukanie randomowej liczby: " << rand << "\n"; // Wyświetlenie szukanej losowej liczby
-                while (current != NULL) { // Pętla przechodząca przez listę
-                    if(current->value == rand){ // Sprawdzenie, czy wartość bieżącego węzła jest równa szukanej liczbie
-                        std::cout << "znaleziono liczbe na " << pozycja << " miejscu! \n"; // Komunikat o znalezieniu liczby
-                        znalezienia += 1; // Inkrementacja liczby znalezionych elementów
-                    }
-                    pozycja += 1; // Zwiększenie pozycji w liście
-                    current = current->next; // Przesunięcie wskaźnika na następny węzeł
+    void Find(){ // Funkcja wyszukująca losową liczbę w liście
+
+            Node *current = head;
+            while (current != NULL) {// przewertowanie przez cala liste
+                if (current->value == 18)
+                    break;
+
+                current = current->next;
+            }
+            }
+
+    void Find1(){ // Funkcja wyszukująca losową liczbę w liście
+
+        Node *current = head;
+        Node *prevcurrent;
+        Node *pprevcurrent;
+        Node *pprevtail;
+        Node *prevtail;
+        Node *newtail;
+        while (current != NULL) {// przewertowanie przez cala liste
+            prevcurrent = current;
+            current = current->next;
+            if(current->next == NULL){
+                newtail = current;
+                prevtail = prevcurrent;
+            }else if(current->next == prevtail){
+                newtail = prevtail;
+                prevtail = current;
+            /*Node *current1 = head;
+            Node *prevcurrent1 = NULL;
+            while (current1 != NULL){
+                if(current1->next == NULL){
+                    newtail = current1;
+                    prevtail = prevcurrent1;
+                }else if(current1->next == prevtail){
+                    newtail = prevtail;
+                    prevtail = current1;
+                    break;
                 }
-                if(znalezienia == 0){ // Sprawdzenie, czy znaleziono jakiekolwiek elementy
-                    std::cout << "Nie znaleziono podanej liczby na liscie. \n"; // Komunikat o braku znalezienia liczby
-                }
+                prevcurrent1 = current1;
+                current1 = current1->next;
+
+            }*/
+            if(current->value == 18 || prevtail->value == 18){
+                break;
             }
         }
+    }}
+
+
+
+    void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
+    {
+
+        Node *cell = head; // utworzenie pointera ktory bedzie rowny head
+        for (int i=0;i<=location;i++) // przeiterowanie przez elementy w liscie az do momentu kiedy nasza lokalizacja bedzie sie zgadzac z adresem w kotry chcemy wpisac
+        {
+            cell = cell->next; // ustawienie prevcell na nastepny adres
+        }
+        cell->value = 18;
+
+    }
 
         int getSize() // Funkcja zwracająca rozmiar listy
         {

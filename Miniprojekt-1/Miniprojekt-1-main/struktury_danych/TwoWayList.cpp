@@ -24,23 +24,33 @@ public:
         srand(time(0));
     }
 
-    void change_value_at_position(int location, T new_data) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
+    ~TwoWayList() {// Destruktor klasy
+        while (head != nullptr) { // Pętla wykonuje się dopóki istnieją węzły na liście
+            Cell *temp = head; // Tworzenie tymczasowego wskaźnika na początek listy
+            head = head->next; // Przesunięcie wskaźnika na następny węzeł w liście
+            delete temp; // Usunięcie węzła, na który wskazuje tymczasowy wskaźnik
+        }
+        tail = nullptr;
+        size = 0; // Zresetowanie wartości size na 0
+    }
+
+    void change_value_at_position(int location) //ustawanie wartosci podanej przez uzytkownika na konkretnym miejscu
     {
-        Cell *prevcell = head; // utworzenie pointera ktory bedzie rowny head
+
+        Cell *cell = head; // utworzenie pointera ktory bedzie rowny head
         for (int i=0;i<=location;i++) // przeiterowanie przez elementy w liscie az do momentu kiedy nasza lokalizacja bedzie sie zgadzac z adresem w kotry chcemy wpisac
         {
-            prevcell = prevcell->next; // ustawienie prevcell na nastepny adres
+            cell = cell->next; // ustawienie prevcell na nastepny adres
         }
-        Cell *newcell = new Cell(); // utworzenie nowej komurki
-        newcell->data = new_data; // przypisanie pointera nowej komurki do nowej danej podanej przez urzytkownika
-        newcell->next = prevcell->next; // przypisanie wartosci adresu nastepujacego po nowej komurce do wartsoci next poprzedniej komurki
-        prevcell->next = newcell; //
-        newcell->prev = prevcell;
-        if (newcell->next != nullptr)
-        {
-            newcell->next->prev = newcell;
-        }
+        cell->data = 18;
 
+    }
+
+    void Addtofind(int ilosc_elemntow){
+        std::cout<< "Na jakim miejscu dodać liczbę 18?" << ilosc_elemntow/3 << " " << ilosc_elemntow/2 << " " << 2*ilosc_elemntow/3;
+        int data;
+        std::cin >> data;
+        change_value_at_position(data, 18);
     }
     
     void push_front(T new_data)
@@ -198,23 +208,16 @@ public:
         return size;
     }
 
-    void Find(T data_to_find)
-    {
-        Cell* current = head;
-        int position = 0;
-        while (current->next != nullptr)
-        {
-            if (current->data == data_to_find)
-            {
-                std::cout << "Znaleziono go na miesjcu " << position << std::endl;
+    void Find(){
+        Cell *front = head;
+        Cell *back = tail;
+        while (front != nullptr && back != nullptr && front != back && front->prev != back) {
+            if (front->data == 18 || back->data == 18) {
                 break;
             }
-            position++;
-            current = current->next;
+            front = front->next;
+            back = back->prev;
         }
-        return; 
     }
-
 };
-
 
