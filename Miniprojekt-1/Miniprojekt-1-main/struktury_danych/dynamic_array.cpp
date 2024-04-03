@@ -153,7 +153,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
         {
             for(int i=0;i<size;i++)
             {
-                std::cout << array[i] << std::endl;
+                std::cout << array[i] << " ";
             }
             std::cout << "Size is " << getSize() << std::endl << "Capasity is " << getCapasity() << std::endl;
         }

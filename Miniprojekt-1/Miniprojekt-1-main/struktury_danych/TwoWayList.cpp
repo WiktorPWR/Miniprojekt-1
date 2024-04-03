@@ -198,7 +198,7 @@ public:
         Cell *current = head;
         while (current != nullptr)
         {
-            std::cout << current->data << std::endl;
+            std::cout << current->data << " ";
             current = current->next;
         }
     }
