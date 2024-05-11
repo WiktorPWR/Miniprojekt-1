@@ -280,7 +280,7 @@ void auto_test(int funkcja,DynamicArray<int> &dynamic_array,SLL1<int> &one_way_l
     
     switch (funkcja)
     {
-    case 1:
+    case 1:// back
         {
             for (int i = 0; i < ilosc_powtorzen; i++)
     {
@@ -451,7 +451,7 @@ void auto_test(int funkcja,DynamicArray<int> &dynamic_array,SLL1<int> &one_way_l
             break;
         }
     
-    case 2:
+    case 2:// front
         {
             for (int i = 0; i < ilosc_powtorzen; i++)
         {
@@ -622,7 +622,7 @@ void auto_test(int funkcja,DynamicArray<int> &dynamic_array,SLL1<int> &one_way_l
             
             break;
         }
-    case 3:
+    case 3:// random
         {
             for (int i = 0; i < ilosc_powtorzen; i++)
         {

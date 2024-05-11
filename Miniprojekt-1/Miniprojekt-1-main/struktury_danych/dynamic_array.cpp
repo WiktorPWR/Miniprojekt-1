@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <time.h>
-
+#include <iostream>
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
