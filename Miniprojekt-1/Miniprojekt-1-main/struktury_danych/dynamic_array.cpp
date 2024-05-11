@@ -149,14 +149,14 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
             }
         }
 
-        void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
+        /*void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
         {
             for(int i=0;i<size;i++)
             {
                 std::cout << array[i] << " ";
             }
             std::cout << "Size is " << getSize() << std::endl << "Capasity is " << getCapasity() << std::endl;
-        }
+        }*/
 
         void change_value_at_position(int location) // funckja majaca na celu zmiene wartosci w daenj konktretej lokalizacji
         {
