@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <time.h>
-
+#include <iostream>
 template <typename T> class DynamicArray // zdefinowanie klasy jako szablon 
 {
     private:
@@ -153,7 +153,7 @@ template <typename T> class DynamicArray // zdefinowanie klasy jako szablon
         {
             for(int i=0;i<size;i++)
             {
-                std::cout << array[i] << std::endl;
+                std::cout << array[i] << " ";
             }
             std::cout << "Size is " << getSize() << std::endl << "Capasity is " << getCapasity() << std::endl;
         }*/
