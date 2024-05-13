@@ -1,154 +1,170 @@
+
 #include <cstdlib>
-#include <time.h>
 #include <iostream>
-template <typename T> class Priority_queue // zdefinowanie klasy jako szablon 
+
+template <typename T> 
+class Priority_queue 
 {
-    private:
-        int size;   //ilosc elementow w tej talbicy
-        int capacity;   //wielkosc fizyczna tablicy
-        Node* array = nullptr;    //utworznuie zmiennej array i przypisanie jej od razu wartosc NULL 
-        struct Node 
-        {
-            T input;
-            int priority;
-            Node* child_1;
-            Node* child_2;
-            Node(T value, int prio) : input(value), priority(prio), child_1(nullptr), child_2(nullptr) {}
-        };
+private:
+    int size;   // Ilość elementów w kolejce
+    int capacity;   // Wielkość fizyczna tablicy
+    struct Node 
+    {
+        T input; // Wartość elementu
+        int priority; // Priorytet elementu
+        Node(T value, int prio) : input(value), priority(prio) {} // Konstruktor struktury Node
+    };
+    Node** array = nullptr;    // Tablica wskaźników do obiektów typu Node
 
-    public:
-        Priority_queue()  //lista inicjalizacyjna array(nullptr) jest tak zapobiegawczo i moze zostac pominiety
+public:
+    Priority_queue() : size(0), capacity(1)
+    {
+        array = new Node*[capacity];    // Alokacja pamięci na tablicę wskaźników do obiektów Node
+    }
+   
+    int returnSize() { return size; } // Zwraca rozmiar kolejki
+
+    int getCapacity() { return capacity; } // Zwraca pojemność kolejki
+
+    void insert(T value, int priority)
+    {
+        Node* node = new Node(value, priority); // Tworzenie nowego elementu
+        grow_array(); // Sprawdzenie i ewentualne zwiększenie rozmiaru tablicy
+        size++;
+        int child = size;
+        array[child] = node;
+
+        // Naprawa kopca
+        while (child > 1 && array[child]->priority > array[child/2]->priority)
         {
-            capacity = 1;   //dajemy rozmiar tablicy by w ogole moc ja stworzyc
-            size = 0;   //nie mamy jeszcze zadnych elementow zatem nasz rozmiar bedzie rony 0
-            array = new T[capacity];    //zaalokowanie nowej tablicy array o type T
+            swap(array[child], array[child/2]);
+            child = child / 2;
         }
-       
-        int returnSize(){return size;} // funkcja zwraca rozmiar talblicy
+    }
 
-        int getCapasity(){return capacity;} // funckja zwraca pojhemnosc talbicy
+    void Heapify(int index_of_element)
+    {
+        int largest = index_of_element;
+        int left_child = 2 * index_of_element;
+        int right_child = 2 * index_of_element + 1;
 
-        void insert(T value,  int priority)  //funckja ma za zadanie wlozyc na ostatnie miejsce listy, element o wartosci przez nas zdefinowanej i pozniej zwieksza jej rozmiar 
+        // Sprawdzenie, czy lewy i prawy potomek nie jest NULL i czy ich priorytet jest większy
+        if (left_child <= size && array[left_child] != nullptr && array[left_child]->priority > array[largest]->priority)
+            largest = left_child;
+        if (right_child <= size && array[right_child] != nullptr && array[right_child]->priority > array[largest]->priority)
+            largest = right_child;
+
+        // Jeśli największy element nie jest aktualny, zamień i napraw kopiec rekurencyjnie
+        if (largest != index_of_element)
         {
-            Node *node = new Node(value,priority);
-       
-            grow_array();
-            size++;
-            int child = size;
-            array[child] = node; // przypisujemy na mijescu size nasza wartosc ktora uzywamy
-
-            while(child > 1 && array[child]->priority > array[child/2]->priority)//prownywanie dziecka z jego rodzicami do czasu az nie bedzie zachowayn warunek ze rodzic bedzie wiekszy niz dziecko
-            {
-                swap(array[child],array[child/2]);
-                child = child/2;
-            }
+            swap(array[largest], array[index_of_element]);
+            Heapify(largest);
         }
+    }
 
-        void Heapify(int index_of_element)
+    T extract_max()
+    {
+        if (size == 0)
         {
-            int largest = index_of_element;
-            if(2*index_of_element <= size && array[2*index_of_element]->priority > array[largest])
-            {
-                largest = 2*index_of_element;
-            }
-            else if(2*index_of_element + 1 <= size && array[2*index_of_element + 1]->priority > array[largest])
-            {
-                largest = 2*index_of_element + 1;
-            }
-            else if(largest != index_of_element)
-            {
-                swap(array[largest],array[index_of_element]);
-                Heapify(largest);
-            }
-
+            throw std::logic_error("Kolejka jest pusta");
         }
-        
-        T extract_max() //funckja majaca na celu ,,wyrzucenie ostatniego elemtnetu z tablicy"
+        T max_element = array[1]->input; // Zapisanie wartości maksymalnego elementu
+        array[1] = array[size]; // Przeniesienie ostatniego elementu na miejsce maksymalnego
+        array[size] = nullptr; // Usunięcie referencji na ostatni element
+        shrink_array(); // Sprawdzenie i ewentualne zmniejszenie rozmiaru tablicy
+        size--;
+        Heapify(1); // Naprawa kopca
+        return max_element; // Zwrócenie maksymalnego elementu
+    }
+
+    T find_max()
+    {
+        if (size == 0 || array[1] == nullptr)
         {
-            if(size == 0)
-            {
-                throw std::logic_error("Kopiec jest pusty");
-            }
-            T max_element = array[0];// element maksymalny
-            array[0] = array[size - 1];
-            array[size - 1] = T(); 
-            shrink_array();
-            size--; // pomnijeszenie rozmiary talbicy o jeden
-            Heapify(0);
-            return max_element;
+            throw std::logic_error("Kolejka jest pusta");
         }
+        return array[1]->input; // Zwrócenie wartości maksymalnego elementu
+    }
 
-        T find_max()
-        { 
-            return array[0];
-        }
-
-        modify_key(T value_of_element,int priority)
+    void modify_key(T value_of_element, int priority)
+    {
+        for (int i = 0; i < size; i++)
         {
-            for(int i=0;i<=size;i++)
+            if (array[i] != nullptr && array[i]->input == value_of_element)
             {
-                if(array[i]->value = value_of_element)
+                std::cout << " Został znaleziony element o wartości " << value_of_element << std::endl;
+                array[i]->priority = priority; // Zmiana priorytetu znalezionego elementu
+                // Sprawdź, czy nowy priorytet jest większy niż priorytet rodzica
+                if (i > 0 && array[i]->priority > array[(i - 1) / 2]->priority)
                 {
-                    array[i]->priority = priority;
+                    // Napraw kopiec w górę, jeśli nowy priorytet jest większy
+                    while (i > 0 && array[i]->priority > array[(i - 1) / 2]->priority)
+                    {
+                        swap(array[i], array[(i - 1) / 2]); // Zamień elementy
+                        i = (i - 1) / 2;
+                    }
                 }
-            }
-        }
-
-        void swap(T& value_1, T& value_2)
-        {
-            T zmienna_tymczasowa = value_1;
-            value_1 = value_2;
-            value_2 = zmienna_tymczasowa;
-        }
-
-        void grow_array() // funckja sprawdzajaca czy mozna ziwekszysc rozmiar tablicy jezeli tak robi to
-        {
-            if (size == capacity) // jezeli rozmiar tablicy jest rowny jej pojemnosci 
-            {
-                T* newlist = new T[capacity*2];  //tworzymy nowa liste o dwa razy wieskzym rozmiarze 
-                capacity = capacity*2; //tutaj zwiekszamy pojemnosc listy dwukrotnie ale tym razem samej zmiennej
-                for(int i=0;i<size;i++) // petla ktora bedzie iterowac tyle razy jaki jest rozmiar listy (ile jest tam jej elementow)
+                else // Jeśli nowy priorytet jest mniejszy lub równy niż priorytet rodzica, napraw kopiec w dół
                 {
-                    newlist[i] = array[i];  // wartosci ze starej listy zapisujemy do nowej listy przez nas stworzonej
+                    Heapify(i);
                 }
-                delete[] array; // usuwamy stara liste z pamieci
-                array = newlist; // przypisujemy nowa liste do starej nazwwy tej zmiennej
-            } else {
-                return; // jezeli nie trzeba to wychodzimy z funckji
+                break; // Zakończ pętlę po znalezieniu elementu
             }
         }
+    }
 
-        void shrink_array() // funkcja sprawdzajaca czy mozna zmniejszyc rozmiar tablicy
+    void swap(Node*& value_1, Node*& value_2)
+    {
+        Node* temp = value_1;
+        value_1 = value_2;
+        value_2 = temp;
+    }
+
+    void grow_array()
+    {
+        if (size == capacity)
         {
-            if (size == capacity/2) // jezeli rozmiar funkcji jest o polowe mniejsza niz polowa rozmairu
+            Node** newlist = new Node*[capacity * 2]; // Tworzenie nowej tablicy o dwukrotnie większym rozmiarze
+            capacity *= 2; // Zwiększenie pojemności kolejki
+            for (int i = 1; i <= size; i++)
             {
-                capacity = capacity/2; 
-                T* newlist = new T[capacity]; // tworzymy nowa liste ktora bedzie miala o polowe pomnijeszony rozmiar niz wczesniej 
-                for(int i=0;i<size;i++)
-                {
-                    newlist[i] = array[i]; // ponone przypisanie elemetow starej listy no nowej listy
-                }
-                delete[] array; // usuniecie starej tablicy
-                array = newlist; // przypisanie do zmiennej array nowej tablicy 
-            } else {
-                return;
+                newlist[i] = array[i]; // Kopiowanie elementów do nowej tablicy
             }
+            delete[] array; // Usunięcie starej tablicy
+            array = newlist; // Przypisanie nowej tablicy
         }
+    }
 
-        void print_array() // funckja majaca na celu wydrukowanie calosci elementow oraz wyswietlisc rozmiar i pojemnosc tablicy
+    void shrink_array()
+    {
+        if (size <= capacity / 4)
         {
-            for(int i=0;i<size;i++)
+            Node** newlist = new Node*[capacity / 2]; // Tworzenie nowej tablicy o połowę mniejszym rozmiarze
+            capacity /= 2; // Zmniejszenie pojemności kolejki
+            for (int i = 1; i <= size; i++)
             {
-                std::cout << array[i] << " ";
+                newlist[i] = array[i]; // Kopiowanie elementów do nowej tablicy
             }
-            std::cout << "Size is " << returnSize() << std::endl << "Capasity is " << getCapasity() << std::endl;
+            delete[] array; // Usunięcie starej tablicy
+            array = newlist; // Przypisanie nowej tablicy
         }
+    }
 
-        ~Priority_queue() //dekonostruktor
+    void print_array()
+    {
+        for (int i = 1; i <= size; i++)
         {
-            delete[] array; // usuwa caly array z pamiecie
+            std::cout << array[i]->input << " ";
         }
+        std::cout << "Rozmiar: " << returnSize() << ", Pojemność: " << getCapacity() << std::endl;
+    }
 
+    ~Priority_queue()
+    {
+        for (int i = 1; i <= size; i++)
+        {
+            delete array[i];
+        }
+        delete[] array;
+    }
 };
-
-
